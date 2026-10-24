@@ -13,20 +13,20 @@
           </div>
         </div>
         <nav class="nav">
-  <router-link to="/">Accueil</router-link>
-  <router-link to="/qui-sommes-nous">À propos</router-link>
+  <router-link to="/">{{ $t('header.nav.home') }}</router-link>
+  <router-link to="/qui-sommes-nous">{{ $t('header.nav.about') }}</router-link>
   
   <!-- Menu déroulant Services -->
   <div class="dropdown">
-    <a href="/" class="nav-link dropdown-toggle">Services </a>
+    <a href="/" class="nav-link dropdown-toggle">{{ $t('header.nav.services') }} </a>
     <ul class="dropdown-menu">
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
   </div>
-   <router-link to="/contact">Contact</router-link>
+   <router-link to="/contact">{{ $t('header.nav.contact') }}</router-link>
         </nav>
       <!-- Langues + Connexion -->
 <div class="header-actions">
@@ -38,7 +38,7 @@
   </select>
 
   <!-- Bouton Connexion (style uniquement, pas de lien) -->
-  <button class="btn-connexion" @click="openLoginModal">
+  <button class="btn-connexion" @click="openLogin">
     {{ $t('header.nav.login') }}
   </button>
 </div>
@@ -48,12 +48,10 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="container hero-content">
-        <span class="hero-badge">Partenariats &amp; Conventions</span>
-        <h1>Construisons ensemble <span>des relations durables</span></h1>
+        <span class="hero-badge">{{ $t('pages.partnerships.hero.badge') }}</span>
+        <h1>{{ $t('pages.partnerships.hero.title') }}</h1>
         <p>
-          Azkexpertise noue des partenariats stratégiques avec des entreprises,
-          des collectivités et des institutions. Nous partageons notre expertise
-          technique et notre réseau pour créer de la valeur sur le long terme.
+          {{ $t('pages.partnerships.hero.description') }}
         </p>
        
       </div>
@@ -63,12 +61,10 @@
     <section class="partenaires" id="partenaires">
       <div class="container">
         <div class="section-head">
-          <span class="section-badge">Nos partenaires</span>
-          <h2>Des collaborations qui font la différence</h2>
+          <span class="section-badge">{{ $t('pages.partnerships.partners.badge') }}</span>
+          <h2>{{ $t('pages.partnerships.partners.title') }}</h2>
           <p>
-            Nous travaillons avec des acteurs reconnus pour leur sérieux et leur
-            innovation dans les domaines de l’automobile, de l’industrie et de la
-            formation technique.
+            {{ $t('pages.partnerships.partners.description') }}
           </p>
         </div>
 
@@ -78,13 +74,11 @@
             <div class="partenaire-logo">
               <div class="logo-placeholder">A.L.V.R.A</div>
             </div>
-            <h3>A.L.V.R.A</h3>
+            <h3>{{ $t('pages.partnerships.partners.card.title') }}</h3>
             <p>
-             Spécialiste de la location de véhicules pour les particuliers et les professionnels.
-             <br/>
-Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi des véhicules.
+             {{ $t('pages.partnerships.partners.card.description') }}
             </p>
-            <span class="partenaire-label">Partenaire technique</span>
+            <span class="partenaire-label">{{ $t('pages.partnerships.partners.card.label') }}</span>
           </div>
 
 
@@ -94,28 +88,25 @@ Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi de
         </div>
       </div>
     </section>
-
     <!-- ===================== CONVENTIONS & ACCORDS ===================== -->
     <section class="conventions">
       <div class="container">
         <div class="conventions-content">
           <div class="conventions-text">
-            <span class="section-badge">Conventions</span>
-            <h2>Des accords cadres<br/>pour des collaborations structurées</h2>
+            <span class="section-badge">{{ $t('pages.partnerships.conventions.badge') }}</span>
+            <h2>{{ $t('pages.partnerships.conventions.title') }}</h2>
             <p>
-              Nos conventions définissent les modalités de collaboration, les
-              engagements réciproques et les objectifs communs. Elles couvrent
-              des domaines variés :
+              {{ $t('pages.partnerships.conventions.description') }}
             </p>
             <ul>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Conseil technique et expertise</strong> – Prestations d’assistance technique et de conseil.</span>
+                <span><strong>{{ $t('pages.partnerships.conventions.items.0.strong') }}</strong> – {{ $t('pages.partnerships.conventions.items.0.text') }}</span>
               </li>
              
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Recherche et développement</strong> – Projets collaboratifs en ingénierie et innovation.</span>
+                <span><strong>{{ $t('pages.partnerships.conventions.items.1.strong') }}</strong> – {{ $t('pages.partnerships.conventions.items.1.text') }}</span>
               </li>
             </ul>
           </div>
@@ -130,8 +121,8 @@ Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi de
     <section class="avantages">
       <div class="container">
         <div class="section-head">
-          <span class="section-badge">Pourquoi collaborer ?</span>
-          <h2>Les avantages d’un partenariat avec AZK Expertise</h2>
+          <span class="section-badge">{{ $t('pages.partnerships.advantages.badge') }}</span>
+          <h2>{{ $t('pages.partnerships.advantages.title') }}</h2>
         </div>
 
         <div class="avantages-grid">
@@ -139,23 +130,23 @@ Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi de
             <div class="avantage-icon">
               <font-awesome-icon icon="user-tie" />
             </div>
-            <h3>Expertise reconnue</h3>
-            <p>Bénéficiez de l’expérience et de la crédibilité de nos experts judiciaires et techniques.</p>
+            <h3>{{ $t('pages.partnerships.advantages.cards.0.title') }}</h3>
+            <p>{{ $t('pages.partnerships.advantages.cards.0.description') }}</p>
           </div>
          
           <div class="avantage-card">
             <div class="avantage-icon">
               <font-awesome-icon icon="handshake" />
             </div>
-            <h3>Relations de confiance</h3>
-            <p>Nous construisons des relations durables basées sur la transparence et l’éthique.</p>
+            <h3>{{ $t('pages.partnerships.advantages.cards.1.title') }}</h3>
+            <p>{{ $t('pages.partnerships.advantages.cards.1.description') }}</p>
           </div>
           <div class="avantage-card">
             <div class="avantage-icon">
               <font-awesome-icon icon="chart-line" />
             </div>
-            <h3>Innovation partagée</h3>
-            <p>Participez à des projets de R&D et bénéficiez des dernières avancées technologiques.</p>
+            <h3>{{ $t('pages.partnerships.advantages.cards.2.title') }}</h3>
+            <p>{{ $t('pages.partnerships.advantages.cards.2.description') }}</p>
           </div>
         </div>
       </div>
@@ -174,21 +165,21 @@ Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi de
               <h2>Azk<span>expertise</span></h2>
             </div>
             <p class="footer-description">
-              Cabinet d'expertise judiciaire, automobile et industrielle. Rigueur, indépendance, précision.
+              {{ $t('footer.description') }}
             </p>
           </div>
           <div class="footer-col">
-            <h3>Services</h3>
+            <h3>{{ $t('header.nav.services') }}</h3>
            <ul class="footer-links">
           
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
           </div>
           <div class="footer-col">
-            <h3>Contact</h3>
+            <h3>{{ $t('footer.sections.contact') }}</h3>
             <ul class="footer-contact">
               <li>
                 <font-awesome-icon icon="phone" />
@@ -205,11 +196,11 @@ Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi de
             </ul>
           </div>
           <div class="footer-col">
-            <h3>Suivez‑nous</h3>
+            <h3>{{ $t('footer.sections.followUs') }}</h3>
             <div class="footer-social">
               <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
               <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'linkedin-in']" /></a>
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
+              <a href="https://www.instagram.com/azkexpertise/" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
             <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
     <font-awesome-icon :icon="['fab', 'whatsapp']" />
   </a>
@@ -217,13 +208,9 @@ Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi de
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 AZK Expertise. Tous droits réservés.</p>
+          <p>{{ $t('footer.copyright') }}</p>
           <div class="footer-legal">
-            <a href="#">Expertise Automobile</a>
-            <span>|</span>
-            <a href="#">Industrielle · Sinistre</a>
-            <span>|</span>
-            <a href="#">Maritime · Maroc</a>
+            {{ $t('footer.legal') }}
           </div>
         </div>
       </div>
@@ -232,10 +219,21 @@ Partenaire technique de confiance pour l'expertise, l'évaluation et le suivi de
 </template>
 
 <script setup>
-const openLoginModal = () => {
-  // Tu peux ouvrir une modale, rediriger, ou juste afficher un message
-  alert('Page de connexion (à implémenter)')
-  // Ou router.push('/connexion') si tu veux garder la redirection
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
+const { locale, t } = useI18n()
+const router = useRouter()
+
+const changeLocale = (newLocale) => {
+  locale.value = newLocale
+  localStorage.setItem('locale', newLocale)
+  document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr'
+  document.documentElement.lang = newLocale
+}
+
+const openLogin = () => {
+  router.push('/connexion')
 }
 </script>
 

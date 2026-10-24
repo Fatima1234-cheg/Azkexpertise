@@ -1,0 +1,29 @@
+# ===== Firebase =====
+.firebase/
+.firebaserc
+firebase-debug.log
+
+# ===== Environnement =====
+.env
+.env.*
+backend/.env
+
+# ===== Dependencies =====
+node_modules/
+vendor/
+venv/
+
+# ===== Build =====
+frontend/dist/
+frontend/node_modules/
+backend/storage/logs/
+backend/bootstrap/cache/
+
+# ===== IDE / OS =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ===== Fichiers sensibles client =====
+frontend/public/images/kfitaimage.png

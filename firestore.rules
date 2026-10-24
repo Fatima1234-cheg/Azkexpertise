@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Collection des demandes de contact
+    match /demandes/{document} {
+      // Lecture : accessible seulement aux administrateurs authentifiés
+      allow read: if request.auth != null;
+      
+      // Création : accessible à tous (pour le formulaire de contact)
+      allow create: if request.resource.data != null;
+      
+      // Mise à jour et suppression : réservé aux administrateurs authentifiés
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Règles par défaut (refuser tout accès aux autres collections)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

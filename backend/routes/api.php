@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PasswordResetController;
+
+Route::post('/password/reset', [PasswordResetController::class, 'sendResetLink']);
+Route::post('/password/reset/confirm', [PasswordResetController::class, 'resetPassword']);
 
 Route::post('/translate', [TranslationController::class, 'translate']);
 Route::get('/translations/{locale}', [TranslationController::class, 'getTranslations']);

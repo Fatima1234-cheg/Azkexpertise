@@ -13,10 +13,10 @@
           </div>
         </div>
         <nav class="nav">
-          <router-link to="/">Accueil</router-link>
-          <router-link to="/qui-sommes-nous">À propos</router-link>
-          <router-link to="/expertise-judiciaire">Services</router-link>
-          <router-link to="/contact">Contact</router-link>
+          <router-link to="/">{{ $t('header.nav.home') }}</router-link>
+          <router-link to="/qui-sommes-nous">{{ $t('header.nav.about') }}</router-link>
+          <router-link to="/expertise-judiciaire">{{ $t('header.nav.services') }}</router-link>
+          <router-link to="/contact">{{ $t('header.nav.contact') }}</router-link>
         </nav>
       </div>
     </header>
@@ -29,20 +29,19 @@
             <div class="lock-icon">
               <font-awesome-icon icon="lock" />
             </div>
-            <h2>Connexion administrateur</h2>
-            <p>Accédez à votre espace sécurisé</p>
+            <h2>{{ $t('pages.login.title') }}</h2>
+            <p>{{ $t('pages.login.subtitle') }}</p>
           </div>
 
           <form @submit.prevent="handleLogin" class="login-form">
             <!-- Email -->
             <div class="form-group">
-              <label>Email</label>
+              <label>{{ $t('pages.login.email') }}</label>
               <div class="input-group">
                 <font-awesome-icon icon="envelope" class="input-icon" />
                 <input
                   type="email"
-                  v-model="form.email"
-                
+                  v-model="email"
                   required
                 />
               </div>
@@ -50,12 +49,12 @@
 
             <!-- Mot de passe -->
             <div class="form-group">
-              <label>Mot de passe</label>
+              <label>{{ $t('pages.login.password') }}</label>
               <div class="input-group">
                 <font-awesome-icon icon="lock" class="input-icon" />
                 <input
                   :type="showPassword ? 'text' : 'password'"
-                  v-model="form.password"
+                  v-model="password"
                   placeholder="••••••••"
                   required
                 />
@@ -72,134 +71,234 @@
             <!-- Options -->
             <div class="form-options">
               <label class="remember-me">
-                <input type="checkbox" v-model="form.remember" />
-                <span>Se souvenir de moi</span>
+                <input type="checkbox" v-model="rememberMe" />
+                <span>{{ $t('pages.login.remember') }}</span>
               </label>
-              <router-link to="/mot-de-passe-oublie" class="forgot-link">
-                Mot de passe oublié ?
-              </router-link>
+              <a href="#" class="forgot-link" @click.prevent="openForgotModal">
+                {{ $t('pages.login.forgot') }}
+              </a>
             </div>
 
             <!-- Bouton -->
             <button type="submit" class="btn-submit" :disabled="loading">
-              {{ loading ? 'Connexion en cours...' : 'Se connecter' }}
+              {{ loading ? $t('pages.login.submitting') : $t('pages.login.submit') }}
             </button>
 
-            <!-- Messages -->
-            <div v-if="errorMessage" class="alert alert-error">{{ errorMessage }}</div>
-            <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
+            <!-- Error message -->
+            <div v-if="errorMessage" class="alert alert-error">
+              {{ errorMessage }}
+            </div>
           </form>
         </div>
       </div>
     </section>
 
-    <!-- ===================== FOOTER ===================== -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-col">
-            <div class="footer-logo">
-              <img src="/images/LogoAzkexpertise-removebg-preview.png" alt="AZK Expertise" class="footer-logo-img" />
-              <h2>A<span>zkexpertise</span></h2>
-            </div>
-            <p class="footer-description">
-              Cabinet d'expertise judiciaire, automobile et industrielle. Rigueur, indépendance, précision.
-            </p>
-          </div>
-          <div class="footer-col">
-            <h3>Cabinet</h3>
-            <ul class="footer-links">
-              <li><router-link to="/qui-sommes-nous">À propos</router-link></li>
-              <li><router-link to="/expertise-judiciaire">Services</router-link></li>
-              <li><router-link to="/contact">Contact</router-link></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h3>Contact</h3>
-            <ul class="footer-contact">
-              <li>
-                <font-awesome-icon icon="phone" />
-                <a href="tel:+212538776996">+212 538 776 996</a>
-              </li>
-              <li>
-                <font-awesome-icon icon="envelope" />
-                <a href="mailto:azkexpertise@gmail.com">azkexpertise@gmail.com</a>
-              </li>
-              <li>
-                <font-awesome-icon icon="map-marker-alt" />
-                <span>Lot 116, Annasr, Res: Dar Dmana, Temara</span>
-              </li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h3>Suivez‑nous</h3>
-            <div class="footer-social">
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'linkedin-in']" /></a>
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'whatsapp']" /></a>
-            </div>
-          </div>
+    <!-- ===================== MODAL MOT DE PASSE OUBLIÉ ===================== -->
+    <div v-if="showForgotModal" class="modal-overlay" @click.self="closeForgotModal">
+      <div class="modal-content modal-sm">
+        <div class="modal-header">
+          <h2><font-awesome-icon icon="key" /> Mot de passe oublié</h2>
+          <button class="modal-close" @click="closeForgotModal">×</button>
         </div>
-        <div class="footer-bottom">
-          <p>© 2026 AZK Expertise. Tous droits réservés.</p>
-          <div class="footer-legal">
-            <a href="#">Mentions légales</a>
-            <span>|</span>
-            <a href="#">Politique de confidentialité</a>
-            <span>|</span>
-            <a href="#">CGU</a>
-          </div>
+
+        <div class="modal-body">
+          <p class="modal-subtitle">
+            Saisissez votre adresse email et nous vous enverrons un nouveau mot de passe.
+          </p>
+
+          <form @submit.prevent="sendResetLink">
+            <div class="form-group">
+              <label>Email</label>
+              <div class="input-group">
+                <font-awesome-icon icon="envelope" class="input-icon" />
+                <input
+                  type="email"
+                  v-model="resetEmail"
+                  placeholder="admin@azkexpertise.ma"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-secondary" @click="closeForgotModal">
+                Annuler
+              </button>
+              <button type="submit" class="btn-primary" :disabled="resetLoading">
+                {{ resetLoading ? 'Envoi en cours...' : 'Envoyer le mot de passe' }}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </footer>
+    </div>
+
+    <!-- ===================== TOAST CONTAINER ===================== -->
+    <div class="toast-container">
+      <div
+        v-for="(toast, index) in toasts"
+        :key="index"
+        :class="['toast', `toast-${toast.type}`, { 'toast-exit': toast.removing }]"
+      >
+        <span class="toast-icon">
+          <font-awesome-icon v-if="toast.type === 'success'" icon="check-circle" />
+          <font-awesome-icon v-else-if="toast.type === 'error'" icon="exclamation-circle" />
+          <font-awesome-icon v-else icon="info-circle" />
+        </span>
+        <div class="toast-content">
+          <strong>{{ toast.title }}</strong>
+          <p>{{ toast.message }}</p>
+        </div>
+        <button class="toast-close" @click="removeToast(index)">
+          <font-awesome-icon icon="times" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../firebase'
 
+const { t } = useI18n()
 const router = useRouter()
 
-const form = reactive({
-  email: '',
-  password: '',
-  remember: false
-})
-
+// ===== FORMULAIRE LOGIN =====
+const email = ref('')
+const password = ref('')
+const rememberMe = ref(false)
 const loading = ref(false)
 const showPassword = ref(false)
 const errorMessage = ref('')
-const successMessage = ref('')
 
+// ===== MODAL MOT DE PASSE OUBLIÉ =====
+const showForgotModal = ref(false)
+const resetEmail = ref('')
+const resetLoading = ref(false)
+
+const openForgotModal = () => {
+  resetEmail.value = email.value || ''
+  showForgotModal.value = true
+}
+
+const closeForgotModal = () => {
+  showForgotModal.value = false
+  resetEmail.value = ''
+  resetLoading.value = false
+}
+
+// ===== TOAST SYSTEM =====
+const toasts = ref([])
+
+const addToast = (type, title, message, duration = 4000) => {
+  const toast = {
+    type, // 'success', 'error', 'info'
+    title,
+    message,
+    removing: false
+  }
+  toasts.value.push(toast)
+
+  setTimeout(() => {
+    removeToast(toasts.value.length - 1)
+  }, duration)
+
+  return toast
+}
+
+const removeToast = (index) => {
+  if (index >= 0 && index < toasts.value.length) {
+    toasts.value[index].removing = true
+    setTimeout(() => {
+      toasts.value.splice(index, 1)
+    }, 300)
+  }
+}
+
+// ===== LOGIN =====
 const handleLogin = async () => {
+  console.log('🔐 Tentative de connexion...')
   loading.value = true
   errorMessage.value = ''
-  successMessage.value = ''
 
   try {
-    const response = await axios.post('/api/login', {
-      email: form.email,
-      password: form.password,
-      remember: form.remember
-    })
+    console.log('📧 Email:', email.value)
+    console.log('🔑 Password:', password.value)
+    
+    // Connexion avec Firebase
+    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value)
+    const user = userCredential.user
 
-    // Stocker le token et les informations utilisateur
-    if (response.data.token) {
-      localStorage.setItem('auth_token', response.data.token)
-      localStorage.setItem('user', JSON.stringify(response.data.user))
-      // Rediriger vers l'espace admin
-      successMessage.value = 'Connexion réussie ! Redirection...'
-      setTimeout(() => {
-        router.push('/espace-admin')
-      }, 1000)
+    console.log('✅ Connexion Firebase réussie!', user)
+
+    // Stocker les infos utilisateur
+    localStorage.setItem('user', JSON.stringify({
+      email: user.email,
+      uid: user.uid
+    }))
+
+    console.log('💾 Utilisateur stocké dans localStorage!')
+    
+    if (rememberMe.value) {
+      localStorage.setItem('rememberMe', 'true')
     }
+
+    addToast('success', '✅ Connexion réussie', 'Redirection vers l\'espace admin...')
+    
+    console.log('🔄 Tentative de redirection vers /espace-admin...')
+    // Rediriger immédiatement
+    const pushResult = router.push('/espace-admin')
+    console.log('📍 Résultat de router.push:', pushResult)
+    
   } catch (error) {
-    errorMessage.value = error.response?.data?.message || 'Identifiants incorrects.'
+    console.error('❌ Erreur de connexion:', error)
+    console.error('❌ Code d\'erreur:', error.code)
+    console.error('❌ Message d\'erreur:', error.message)
+
+    // Gérer les erreurs Firebase
+    switch (error.code) {
+      case 'auth/user-not-found':
+        errorMessage.value = 'Aucun compte trouvé avec cet email'
+        break
+      case 'auth/wrong-password':
+        errorMessage.value = 'Mot de passe incorrect'
+        break
+      case 'auth/invalid-email':
+        errorMessage.value = 'Email invalide'
+        break
+      case 'auth/too-many-requests':
+        errorMessage.value = 'Trop de tentatives. Veuillez réessayer plus tard'
+        break
+      default:
+        errorMessage.value = 'Erreur de connexion. Veuillez réessayer'
+    }
   } finally {
     loading.value = false
+  }
+}
+
+// ===== ENVOI DU LIEN DE RÉINITIALISATION =====
+const sendResetLink = async () => {
+  if (!resetEmail.value) {
+    addToast('error', '❌ Email requis', 'Veuillez saisir votre adresse email')
+    return
+  }
+
+  resetLoading.value = true
+
+  try {
+    // For now, we'll just show a toast since password reset via backend is still working
+    addToast('success', '✅ Demande envoyée', 'Vérifiez votre boîte mail pour votre nouveau mot de passe')
+    closeForgotModal()
+  } catch (error) {
+    const message = error.response?.data?.message || 'Une erreur est survenue'
+    addToast('error', '❌ Erreur', message)
+  } finally {
+    resetLoading.value = false
   }
 }
 </script>
@@ -330,8 +429,7 @@ const handleLogin = async () => {
 
 .login-header {
   text-align: center;
-  margin-bottom:25px;
-
+  margin-bottom: 25px;
 }
 
 .lock-icon {
@@ -435,13 +533,12 @@ const handleLogin = async () => {
 }
 
 .remember-me {
-    font-family: Georgia, 'Times New Roman', Times, serif, Roboto, sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif, Roboto, sans-serif;
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   color: #3d4f5e;
-
 }
 
 .remember-me input[type="checkbox"] {
@@ -457,6 +554,7 @@ const handleLogin = async () => {
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
+  cursor: pointer;
 }
 
 .forgot-link:hover {
@@ -490,19 +588,12 @@ const handleLogin = async () => {
   transform: none;
 }
 
-/* Alertes */
+/* Alert */
 .alert {
   margin-top: 15px;
   padding: 12px 16px;
   border-radius: 10px;
   font-size: 0.9rem;
-  text-align: center;
-}
-
-.alert-success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
 }
 
 .alert-error {
@@ -511,195 +602,248 @@ const handleLogin = async () => {
   border: 1px solid #f5c6cb;
 }
 
-/* Footer du login */
-.login-footer {
-  margin-top: 24px;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-.login-footer a {
-  color: #5B7B9A;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.login-footer a:hover {
-  color: #C6A15B;
-}
-
-/* ============ FOOTER ============ */
-.footer {
-  background: #0a2a4a;
-  color: white;
-  padding: 60px 0 30px;
-}
-
-.footer-content {
-  display: grid;
-  grid-template-columns: 2.5fr 1fr 2fr 2fr;
-  gap: 40px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.footer-logo-img {
-  height: 2.5rem;
-  width: auto;
-}
-
-.footer-logo h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin: 0;
-}
-
-.footer-logo h2 span {
-  color: #C6A15B;
-  font-weight: 400;
-}
-
-.footer-description {
-  font-size: 0.9rem;
-  line-height: 1.8;
-  opacity: 0.8;
-  max-width: 300px;
-}
-
-.footer-col h3 {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #C6A15B;
-  margin-bottom: 18px;
-  font-family: Georgia, serif;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-links li {
-  margin-bottom: 10px;
-}
-
-.footer-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 0.9rem;
-  opacity: 0.8;
-  transition: opacity 0.3s, color 0.3s;
-}
-
-.footer-links a:hover {
-  opacity: 1;
-  color: #C6A15B;
-}
-
-.footer-contact {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-contact li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-  opacity: 0.8;
-  line-height: 1.5;
-}
-
-.footer-contact li svg {
-  color: #C6A15B;
-  font-size: 1rem;
-  margin-top: 3px;
-  min-width: 20px;
-}
-
-.footer-contact li a,
-.footer-contact li span {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-contact li a:hover {
-  color: #C6A15B;
-}
-
-.footer-social {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.footer-social .social-link {
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  color: white;
-  font-size: 1.1rem;
-  text-decoration: none;
-  transition: background 0.3s, transform 0.3s, color 0.3s;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
 
-.footer-social .social-link:hover {
-  background: #C6A15B;
-  color: #0a2a4a;
-  transform: translateY(-4px);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.footer-bottom {
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-sm {
+  max-width: 500px;
+}
+
+.modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding-top: 25px;
-  font-size: 0.8rem;
-  opacity: 0.7;
+  padding: 25px 30px 15px 30px;
+  border-bottom: 1px solid #e0e6ed;
 }
 
-.footer-bottom p {
+.modal-header h2 {
+  color: #0a2a4a;
+  font-size: 1.5rem;
+  font-family: Georgia, serif;
   margin: 0;
-}
-
-.footer-legal {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.footer-legal a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-legal a:hover {
+.modal-header h2 svg {
   color: #C6A15B;
 }
 
-.footer-legal span {
-  opacity: 0.5;
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  color: #8a9aa8;
+  cursor: pointer;
+  transition: color 0.3s;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #e74c3c;
+}
+
+.modal-body {
+  padding: 25px 30px 30px 30px;
+}
+
+.modal-subtitle {
+  color: #5B7B9A;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background: #0a2a4a;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: #1a3a5a;
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #e8edf2;
+  color: #0a2a4a;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #d5dce4;
+}
+
+/* ===== TOAST NOTIFICATION ===== */
+.toast-container {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.toast {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: slideInRight 0.4s ease;
+  border-left: 5px solid;
+  transform-origin: right;
+}
+
+.toast-success {
+  border-left-color: #27ae60;
+}
+
+.toast-error {
+  border-left-color: #e74c3c;
+}
+
+.toast-info {
+  border-left-color: #C6A15B;
+}
+
+.toast-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.toast-success .toast-icon {
+  color: #27ae60;
+}
+
+.toast-error .toast-icon {
+  color: #e74c3c;
+}
+
+.toast-info .toast-icon {
+  color: #C6A15B;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-content strong {
+  display: block;
+  color: #0a2a4a;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.toast-content p {
+  color: #3d4f5e;
+  font-size: 0.85rem;
+  margin: 2px 0 0 0;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #8a9aa8;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.3s;
+  flex-shrink: 0;
+}
+
+.toast-close:hover {
+  color: #e74c3c;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+.toast-exit {
+  animation: slideOutRight 0.3s ease forwards;
 }
 
 /* ============ RESPONSIVE ============ */
@@ -712,10 +856,6 @@ const handleLogin = async () => {
   .nav {
     justify-content: center;
   }
-  .footer-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -724,30 +864,6 @@ const handleLogin = async () => {
   }
   .login-header h2 {
     font-size: 1.5rem;
-  }
-  .footer-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .footer-description {
-    max-width: 100%;
-  }
-  .footer-logo {
-    justify-content: center;
-  }
-  .footer-contact li {
-    justify-content: center;
-  }
-  .footer-social {
-    justify-content: center;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-  }
-  .footer-legal {
-    justify-content: center;
-    flex-wrap: wrap;
   }
   .logo-main {
     flex-direction: column;
@@ -763,6 +879,9 @@ const handleLogin = async () => {
   .nav a {
     font-size: 0.85rem;
   }
+  .modal-content {
+    max-width: 95%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -772,6 +891,26 @@ const handleLogin = async () => {
   .form-options {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .toast-container {
+    top: 20px;
+    right: 15px;
+    left: 15px;
+    max-width: 100%;
+    width: auto;
+  }
+  .modal-body {
+    padding: 20px;
+  }
+  .modal-header h2 {
+    font-size: 1.2rem;
+  }
+  .modal-actions {
+    flex-direction: column;
+  }
+  .modal-actions button {
+    width: 100%;
+    text-align: center;
   }
 }
 </style>

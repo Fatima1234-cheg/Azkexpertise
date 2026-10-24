@@ -24,10 +24,10 @@
   <div class="dropdown">
     <a href="#" class="nav-link dropdown-toggle">{{ $t('header.nav.services') }} </a>
     <ul class="dropdown-menu">
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
   </div>
 
@@ -234,43 +234,29 @@
   <div v-if="errorMessage" class="alert alert-error">{{ errorMessage }}</div>
 </form>
 
-<!-- Demandes sauvegardées -->
-<div v-if="savedRequests.length > 0" class="saved-requests">
-  <h4 style="margin-top: 30px; color: #0a2a4a; font-weight: 700;">Demandes Sauvegardées ({{ savedRequests.length }})</h4>
-  <div class="requests-list">
-    <div v-for="(request, index) in savedRequests" :key="index" class="request-item">
-      <div class="request-info">
-        <p><strong>{{ request.name }}</strong> - {{ request.email }}</p>
-        <p style="font-size: 0.85rem; color: #666;">{{ request.date ? new Date(request.date).toLocaleDateString('fr-FR') : '' }}</p>
-      </div>
-      <button 
-        @click="deleteRequest(index)"
-        class="btn-delete"
-        type="button"
-      >
-        Supprimer
-      </button>
-    </div>
-  </div>
-</div>
+
       </div>
 
       <!-- Colonne droite : CARTE + INFOS (en dessous) -->
       <div class="contact-right">
         <!-- Carte -->
-       <div class="contact-map">
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.123456789012!2d-6.918123!3d33.888456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDUzJzE4LjQiTiA2wrA1NScwNS4yIlc!5e0!3m2!1sfr!2sma!4v1234567890"
-    width="100%"
-    height="300"
-    style="border:0; border-radius: 16px;"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-  ></iframe>
-  <p class="map-credit">
-    <a href="https://www.google.com/maps/place/Lot+116,+Annasr,+Temara,+Maroc" target="_blank">{{ $t('contact.map.credit') }}</a> | OpenStreetMap contributors
-  </p>
+     <div class="contact-map">
+ <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2522.485241701272!2d-6.9355536256453!3d33.900717125718494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda70d04f01ddcb7%3A0x14e8548a73968971!2zQ2FiaW5ldCBBWksgRXhwZXJ0aXNlICjZhdmD2KrYqCDYp9mE2K7YqNmK2LEg2KfZhNmC2LbYp9im2Yog2LnYqNivINin2YTYudiy2YrZgNmA2YDYstin2YTZg9mB2YDZitmA2YDZgNmA2KrYqSAo2K7YqNmK2LHZhdmK2YPYp9mG2YDZgNmA2YrZgyDYudmA2YDZgNmA2KfZhTog2LPZitin2LHYp9iqLCDYr9ix2KfYrNin2Kog2YbYp9ix2YrYqSwg2LTYp9it2YbYp9iqICkp!5e1!3m2!1sen!2sma!4v1783425591780!5m2!1sen!2sma" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <div class="map-credit">
+    <font-awesome-icon icon="map-marker-alt" style="color: #e74c3c; margin-right: 6px;" />
+  <a 
+  href="https://www.google.com/maps/search/Police%2C%20Res%20Dar%20Dmana%20Lot%20116%2C%20Mag%20116%2C%20pr%C3%A9s%20%C3%A0%20l'arrondissement%20N%C2%B07%2C%20T%C3%A9mara%2012000" 
+  target="_blank" 
+  rel="noopener noreferrer"
+>
+ 
+  Ouvrir dans Google Maps
+</a>
+    <span style="color: #8a9aa8; margin: 0 8px;">|</span>
+    <span style="color: #8a9aa8; font-size: 0.8rem;">
+      Police, Res Dar Dmana Lot 116, Mag 116, prés à l'arrondissement N°7, Témara 12000
+    </span>
+  </div>
 </div>
 
         <!-- INFOS (juste en dessous de la carte) -->
@@ -391,13 +377,13 @@
       <div class="footer-col">
         <h3>{{ $t('footer.sections.followUs') }}</h3>
         <div class="footer-social">
-         <a href="#" class="social-link">
+         <a href="https://web.facebook.com/profile.php?id=61565082330331" class="social-link">
   <font-awesome-icon :icon="['fab', 'facebook-f']" />
 </a>
-<a href="#" class="social-link">
+<a href="https://www.linkedin.com/in/azk-expertise-951723420/" class="social-link">
   <font-awesome-icon :icon="['fab', 'linkedin-in']" />
 </a>
- <a href="#" class="social-link" aria-label="Instagram">
+ <a href="https://www.instagram.com/azkexpertise/" class="social-link" aria-label="Instagram">
     <font-awesome-icon :icon="['fab', 'instagram']" />
   </a>
   <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
@@ -411,12 +397,8 @@
     <div class="footer-bottom">
       <p>{{ $t('footer.copyright') }}</p>
       
-     <div class="footer-legal">
-        <a href="#">Expertise Automobile</a>
-        <span>|</span>
-        <a href="#">Industrielle · Sinistre</a>
-        <span>|</span>
-        <a href="#">Maritime · Maroc</a>
+      <div class="footer-legal">
+        <a href="#">{{ $t('footer.legal') }}</a>
       </div>
         </div>
   </div>
@@ -427,11 +409,10 @@
 </template>
 
 <script setup>
-
 import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { db, collection, addDoc } from '@/firebase'
 
 const { locale, t } = useI18n()
 const router = useRouter()
@@ -441,52 +422,13 @@ const form = reactive({
   telephone: '',
   email: '',
   objet: '',
-    objetAutre: '',
+  objetAutre: '',
   message: ''
 })
 
 const loading = ref(false)
 const successMessage = ref('')
 const errorMessage = ref('')
-const savedRequests = ref([])
-
-// Générer un nouvel ID de session (sessionStorage = réinitialisé à chaque fermeture d'onglet)
-const getSessionId = () => {
-  let sessionId = sessionStorage.getItem('userSessionId')
-  if (!sessionId) {
-    sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
-    sessionStorage.setItem('userSessionId', sessionId)
-  }
-  return sessionId
-}
-
-// Obtenir la clé de stockage spécifique à cette session
-const getStorageKey = () => {
-  return 'contactRequests_' + getSessionId()
-}
-
-// Charger les demandes sauvegardées pour la session active
-const loadSavedRequests = () => {
-  const storageKey = getStorageKey()
-  const requests = JSON.parse(sessionStorage.getItem(storageKey) || '[]')
-  savedRequests.value = requests
-}
-
-// Supprimer une demande de la session
-const deleteRequest = (index) => {
-  if (confirm('Êtes-vous sûr de vouloir supprimer cette demande définitivement ?')) {
-    const storageKey = getStorageKey()
-    const existingRequests = JSON.parse(sessionStorage.getItem(storageKey) || '[]')
-    existingRequests.splice(index, 1)
-    sessionStorage.setItem(storageKey, JSON.stringify(existingRequests))
-    loadSavedRequests()
-  }
-}
-
-// Charger les demandes au montage du composant
-onMounted(() => {
-  loadSavedRequests()
-})
 
 const changeLocale = (newLocale) => {
   locale.value = newLocale
@@ -499,45 +441,39 @@ const openLogin = () => {
   router.push('/connexion')
 }
 
-
 const submitForm = async () => {
   loading.value = true
   successMessage.value = ''
   errorMessage.value = ''
 
   try {
-    const formData = {
-      name: form.nom,
-      phone: form.telephone,
+    // 🔥 Ajouter la demande dans Firestore
+    const docRef = await addDoc(collection(db, 'demandes'), {
+      nom: form.nom,
+      telephone: form.telephone,
       email: form.email,
-      subject: form.objet,
+      objet: form.objet === 'autre' ? form.objetAutre : form.objet,
       message: form.message,
-      otherSubject: form.objetAutre,
+      statut: 'en_attente',
       date: new Date().toISOString()
-    }
+    })
 
-    const response = await axios.post('/api/contact', formData)
-
-    // Sauvegarder dans la session actuelle (disparu à la fermeture de l'onglet)
-    const storageKey = getStorageKey()
-    const existingRequests = JSON.parse(sessionStorage.getItem(storageKey) || '[]')
-    existingRequests.unshift(formData)
-    sessionStorage.setItem(storageKey, JSON.stringify(existingRequests))
-
-    successMessage.value = t('contact.form.success')
-    // Réinitialiser
+    console.log('✅ Demande ajoutée avec ID:', docRef.id)
+    successMessage.value = t('contact.form.success') || '✅ Votre message a été envoyé avec succès !'
+    
+    // Réinitialiser le formulaire
     Object.assign(form, {
       nom: '',
       telephone: '',
       email: '',
       objet: '',
+      objetAutre: '',
       message: ''
     })
-    // Recharger les demandes sauvegardées
-    loadSavedRequests()
+
   } catch (error) {
-    errorMessage.value = t('contact.form.error')
-    console.error(error)
+    console.error('❌ Erreur Firestore:', error)
+    errorMessage.value = t('contact.form.error') || '❌ Erreur lors de l\'envoi: ' + error.message
   } finally {
     loading.value = false
   }
@@ -2140,65 +2076,4 @@ const submitForm = async () => {
   color: #0a2a4a;
 }
 
-/* ============ SAVED REQUESTS ============ */
-.saved-requests {
-  margin-top: 30px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  border-left: 4px solid #f1ba05;
-}
-
-.saved-requests h4 {
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.requests-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.request-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  padding: 12px 15px;
-  border-radius: 8px;
-  border: 1px solid #e0e6ed;
-}
-
-.request-info {
-  flex: 1;
-}
-
-.request-info p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #3d4f5e;
-}
-
-.request-info p:first-child {
-  font-weight: 600;
-  color: #0a2a4a;
-}
-
-.btn-delete {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
-  margin-left: 10px;
-}
-
-.btn-delete:hover {
-  background: #c0392b;
-}
 </style>

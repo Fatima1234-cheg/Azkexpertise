@@ -13,21 +13,21 @@
           </div>
         </div>
        <nav class="nav">
-  <router-link to="/">Accueil</router-link>
-  <router-link to="/qui-sommes-nous">À propos</router-link>
+  <router-link to="/">{{ $t('header.nav.home') }}</router-link>
+  <router-link to="/qui-sommes-nous">{{ $t('header.nav.about') }}</router-link>
   
   <!-- Menu déroulant Services -->
   <div class="dropdown">
-    <a href="#" class="nav-link dropdown-toggle">Services </a>
+    <a href="#" class="nav-link dropdown-toggle">{{ $t('header.nav.services') }} </a>
     <ul class="dropdown-menu">
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
   </div>
 
-  <router-link to="/contact">Contact</router-link>
+  <router-link to="/contact">{{ $t('header.nav.contact') }}</router-link>
 </nav>
        <!-- Langues + Connexion -->
 <div class="header-actions">
@@ -39,7 +39,7 @@
   </select>
 
   <!-- Bouton Connexion (style uniquement, pas de lien) -->
-  <button class="btn-connexion" @click="openLoginModal">
+ <button class="btn-connexion" @click="openLogin">
     {{ $t('header.nav.login') }}
   </button>
 </div>
@@ -49,16 +49,14 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="container hero-content">
-        <span class="hero-badge">Audit · Formation · Assistance Technique</span>
-        <h1>Optimisez votre flotte <span>et vos équipements</span></h1>
+        <span class="hero-badge">{{ $t('pages.audit.hero.badge') }}</span>
+        <h1>{{ $t('pages.audit.hero.title') }}</h1>
         <p>
-          Audits de flottes, diagnostics mécaniques, formations sur mesure et 
-          conseil technique. Nous vous accompagnons dans la performance, la 
-          sécurité et la maîtrise de vos actifs.
+          {{ $t('pages.audit.hero.description') }}
         </p>
         <div class="hero-actions">
-          <a href="#services" class="btn-primary">Découvrir nos services</a>
-          <a href="/contact" class="btn-secondary">Demander un audit</a>
+          <a href="#services" class="btn-primary">{{ $t('pages.audit.hero.buttons.discover') }}</a>
+          <a href="/contact" class="btn-secondary">{{ $t('pages.audit.hero.buttons.request') }}</a>
         </div>
       </div>
     </section>
@@ -67,12 +65,10 @@
     <section class="services" id="services">
       <div class="container">
         <div class="section-head">
-          <span class="section-badge">Nos Prestations</span>
-          <h2>Un accompagnement technique complet</h2>
+          <span class="section-badge">{{ $t('pages.audit.services.badge') }}</span>
+          <h2>{{ $t('pages.audit.services.title') }}</h2>
           <p>
-            De l’audit à la formation en passant par le conseil stratégique, 
-            nous mettons notre expertise à votre service pour optimiser votre 
-            parc, vos équipements et vos processus.
+            {{ $t('pages.audit.services.description') }}
           </p>
         </div>
 
@@ -82,11 +78,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="clipboard-check" class="service-icon" />
             </div>
-            <h3>Audit de flotte &amp; diagnostic mécanique</h3>
-            <p>
-              Analyse complète de votre parc véhicules (VL, PL, engins), 
-              diagnostic technique, évaluation des coûts et préconisations.
-            </p>
+            <h3>{{ $t('pages.audit.services.cards.0.title') }}</h3>
+            <p>{{ $t('pages.audit.services.cards.0.description') }}</p>
           </div>
 
           <!-- Carte 2 -->
@@ -94,11 +87,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="headset" class="service-icon" />
             </div>
-            <h3>Assistance &amp; diagnostic à distance</h3>
-            <p>
-              Support technique à distance, analyse des données, aide à la 
-              décision rapide pour minimiser les temps d’immobilisation.
-            </p>
+            <h3>{{ $t('pages.audit.services.cards.1.title') }}</h3>
+            <p>{{ $t('pages.audit.services.cards.1.description') }}</p>
           </div>
 
 
@@ -109,11 +99,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="building" class="service-icon" />
             </div>
-            <h3>Organisation de la flotte</h3>
-            <p>
-              Gestion administrative et technique optimisée : planning, 
-              maintenance préventive, suivi des coûts, conformité réglementaire.
-            </p>
+            <h3>{{ $t('pages.audit.services.cards.2.title') }}</h3>
+            <p>{{ $t('pages.audit.services.cards.2.description') }}</p>
           </div>
 
           <!-- Carte 6 -->
@@ -121,11 +108,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="tools" class="service-icon" />
             </div>
-            <h3>Audit technique des garages &amp; ateliers</h3>
-            <p>
-              Diagnostic des équipements, organisation des postes de travail, 
-              analyse des process et recommandations pour gagner en efficacité.
-            </p>
+            <h3>{{ $t('pages.audit.services.cards.3.title') }}</h3>
+            <p>{{ $t('pages.audit.services.cards.3.description') }}</p>
           </div>
 
           <!-- Carte 7 -->
@@ -133,11 +117,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="chart-pie" class="service-icon" />
             </div>
-            <h3>Études, conseil &amp; audit technique</h3>
-            <p>
-              Analyse des systèmes techniques, détection des défaillances, 
-              conseil stratégique, aide à la décision et optimisation de la performance.
-            </p>
+            <h3>{{ $t('pages.audit.services.cards.4.title') }}</h3>
+            <p>{{ $t('pages.audit.services.cards.4.description') }}</p>
           </div>
 
           <!-- Carte 8 -->
@@ -145,44 +126,38 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="lightbulb" class="service-icon" />
             </div>
-            <h3>Méthodes avancées d’amélioration</h3>
-            <p>
-              Mise en œuvre d’outils éprouvés : AMDEC, PDCA, Pareto, 
-              DEMATEL, AHP pour une amélioration continue de vos processus.
-            </p>
+            <h3>{{ $t('pages.audit.services.cards.5.title') }}</h3>
+            <p>{{ $t('pages.audit.services.cards.5.description') }}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== ENGAGEMENT ===================== -->
+             <!-- ===================== ENGAGEMENT ===================== -->
     <section class="engagement">
       <div class="container">
         <div class="engagement-content">
           <div class="engagement-text">
-            <span class="section-badge">Notre promesse</span>
-            <h2>Un partenaire technique de confiance</h2>
+            <span class="section-badge">{{ $t('pages.audit.promise.badge') }}</span>
+            <h2>{{ $t('pages.audit.promise.title') }}</h2>
             <p>
-              Nous plaçons la rigueur, la transparence et l’écoute au cœur de 
-              chaque mission. Notre expérience terrain et notre approche 
-              scientifique garantissent des préconisations pertinentes et 
-              actionnables.
+              {{ $t('pages.audit.promise.description') }}
             </p>
             <ul>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Expertise reconnue</strong> – Une expertise alliant rigueur, innovation et maîtrise des systèmes mécaniques et industriels.</span>
+                <span><strong>{{ $t('pages.audit.promise.items.0.strong') }}</strong> – {{ $t('pages.audit.promise.items.0.text') }}</span>
               </li>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Approche sur mesure</strong> – Chaque prestation est adaptée à vos besoins spécifiques.</span>
+                <span><strong>{{ $t('pages.audit.promise.items.1.strong') }}</strong> – {{ $t('pages.audit.promise.items.1.text') }}</span>
               </li>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Résultats concrets</strong> – Réduction des coûts, amélioration de la fiabilité et de la sécurité.</span>
+                <span><strong>{{ $t('pages.audit.promise.items.2.strong') }}</strong> – {{ $t('pages.audit.promise.items.2.text') }}</span>
               </li>
             </ul>
-            <a href="/contact" class="btn-primary">Nous solliciter</a>
+            <a href="/contact" class="btn-primary">{{ $t('pages.audit.promise.button') }}</a>
           </div>
           <div class="engagement-image">
             <img src="/images/audit1.jpg" alt="Audit technique" />
@@ -194,12 +169,12 @@
     <!-- ===================== CTA FINAL ===================== -->
     <section class="cta-final">
       <div class="container cta-content">
-        <h2>Prêt à optimiser votre flotte ou vos ateliers ?</h2>
+        <h2>{{ $t('pages.audit.cta.title') }}</h2>
         <p>
-          Contactez‑nous pour un premier échange gratuit et sans engagement.
+          {{ $t('pages.audit.cta.description') }}
         </p>
         <div class="cta-buttons">
-          <a href="/contact" class="btn-primary">Demander un audit</a>
+          <a href="/contact" class="btn-primary">{{ $t('pages.audit.cta.button') }}</a>
           <a href="tel:+212666698155" class="btn-secondary">
             <font-awesome-icon icon="phone" /> Appeler
           </a>
@@ -217,20 +192,20 @@
               <h2>Azk<span>expertise</span></h2>
             </div>
             <p class="footer-description">
-              Cabinet d'expertise judiciaire, automobile et industrielle. Rigueur, indépendance, précision.
+              {{ $t('footer.description') }}
             </p>
           </div>
           <div class="footer-col">
-            <h3>Services</h3>
+            <h3>{{ $t('header.nav.services') }}</h3>
            <ul class="footer-links">
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
           </div>
           <div class="footer-col">
-            <h3>Contact</h3>
+            <h3>{{ $t('footer.sections.contact') }}</h3>
             <ul class="footer-contact">
               <li>
                 <font-awesome-icon icon="phone" />
@@ -247,11 +222,11 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h3>Suivez‑nous</h3>
+            <h3>{{ $t('footer.sections.followUs') }}</h3>
             <div class="footer-social">
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
+              <a href="https://web.facebook.com/profile.php?id=61565082330331" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
               <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'linkedin-in']" /></a>
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
+              <a href="https://www.instagram.com/azkexpertise/" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
   <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
     <font-awesome-icon :icon="['fab', 'whatsapp']" />
   </a>
@@ -259,13 +234,9 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 AZK Expertise. Tous droits réservés.</p>
+          <p>{{ $t('footer.copyright') }}</p>
           <div class="footer-legal">
-            <a href="#">Expertise Automobile</a>
-            <span>|</span>
-            <a href="#">Industrielle · Sinistre</a>
-            <span>|</span>
-            <a href="#">Maritime · Maroc</a>
+            {{ $t('footer.legal') }}
           </div>
         </div>
       </div>
@@ -274,10 +245,21 @@
 </template>
 
 <script setup>
-const openLoginModal = () => {
-  // Tu peux ouvrir une modale, rediriger, ou juste afficher un message
-  alert('Page de connexion (à implémenter)')
-  // Ou router.push('/connexion') si tu veux garder la redirection
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
+const { locale, t } = useI18n()
+const router = useRouter()
+
+const changeLocale = (newLocale) => {
+  locale.value = newLocale
+  localStorage.setItem('locale', newLocale)
+  document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr'
+  document.documentElement.lang = newLocale
+}
+
+const openLogin = () => {
+  router.push('/connexion')
 }
 </script>
 

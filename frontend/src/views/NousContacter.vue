@@ -17,21 +17,21 @@
           </div>
         </div>
         <nav class="nav">
-          <router-link to="/">Accueil</router-link>
-          <router-link to="/qui-sommes-nous">À propos</router-link>
+          <router-link to="/">{{ $t('header.nav.home') }}</router-link>
+          <router-link to="/qui-sommes-nous">{{ $t('header.nav.about') }}</router-link>
           
           <!-- Menu déroulant Services -->
           <div class="dropdown">
-            <a href="#" class="nav-link dropdown-toggle">Services </a>
-            <ul class="dropdown-menu">
-              <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-              <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-              <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-              <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
-            </ul>
-          </div>
+    <a href="#" class="nav-link dropdown-toggle">{{ $t('header.nav.services') }} </a>
+    <ul class="dropdown-menu">
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
+    </ul>
+  </div>
 
-          <router-link to="/contact">Contact</router-link>
+          <router-link to="/contact">{{ $t('header.nav.contact') }}</router-link>
         </nav>
       <!-- Langues + Connexion -->
 <div class="header-actions">
@@ -43,7 +43,7 @@
   </select>
 
   <!-- Bouton Connexion (style uniquement, pas de lien) -->
-  <button class="btn-connexion" @click="openLoginModal">
+ <button class="btn-connexion" @click="openLogin">
     {{ $t('header.nav.login') }}
   </button>
 </div>
@@ -54,8 +54,8 @@
     <section class="contact-section">
       <div class="container">
         <div class="contact-header">
-          <span class="contact-badge">CONTACT</span>
-          <h4>Remplissez le formulaire ou contactez-nous directement — nous répondons sous 24h</h4>
+          <span class="contact-badge">{{ $t('pages.contactPage.badge') }}</span>
+          <h4>{{ $t('pages.contactPage.title') }}</h4>
         </div>
 
         <div class="contact-wrapper">
@@ -65,12 +65,12 @@
               <!-- Ligne 1 : Email + Nom -->
               <div class="form-row">
                 <div class="form-group">
-                  <label>Nom <span class="required">*</span></label>
-                  <input type="text" v-model="form.nom" placeholder="Votre nom" required />
+                  <label>{{ $t('pages.contactPage.fields.name') }} <span class="required">*</span></label>
+                  <input type="text" v-model="form.nom" :placeholder="$t('pages.contactPage.fields.name')" required />
                 </div>
                 <div class="form-group">
-                  <label>Email <span class="required">*</span></label>
-                  <input type="email" v-model="form.email" placeholder="vous@exemple.com" required />
+                  <label>{{ $t('pages.contactPage.fields.email') }} <span class="required">*</span></label>
+                  <input type="email" v-model="form.email" :placeholder="$t('pages.contactPage.fields.email')" required />
                 </div>
                 
               </div>
@@ -78,22 +78,22 @@
               <!-- Ligne 2 : Téléphone -->
               <div class="form-row">
                 <div class="form-group">
-                  <label>Téléphone <span class="required">*</span></label>
-                  <input type="tel" v-model="form.telephone" placeholder="+212 6 12 34 56 78" required />
+                  <label>{{ $t('pages.contactPage.fields.phone') }} <span class="required">*</span></label>
+                  <input type="tel" v-model="form.telephone" :placeholder="$t('pages.contactPage.fields.phone')" required />
                 </div>
                 <div class="form-group">
                  <div class="form-group">
-                <label>Objet <span class="required">*</span></label>
+                <label>{{ $t('pages.contactPage.fields.subject') }} <span class="required">*</span></label>
                 <select v-model="form.objet" required>
-                  <option value="">Sélectionnez un objet</option>
-                  <option value="demande-expertise">Demande d'expertise</option>
-                  <option value="evaluation-vehicule">Évaluation véhicule</option>
-                  <option value="assistance-technique">Assistance technique</option>
-                  <option value="demande-devis">Demande de Devis d'expertise</option>
-                  <option value="pv-de-decoupage">PV de découpage N° chassi</option>
-                  <option value="pv-expertise-technique">PV d'expertise technique / économique</option>
-                  <option value="pv-retrait-carte-grise">PV d'expertise pour retrait définitif de la carte grise</option>
-                  <option value="autre">Autre</option>
+                  <option value="">{{ $t('pages.contactPage.fields.subjectPlaceholder') }}</option>
+                  <option value="demande-expertise">{{ $t('contact.form.subjects.expertise') }}</option>
+                  <option value="evaluation-vehicule">{{ $t('contact.form.subjects.vehicle') }}</option>
+                  <option value="assistance-technique">{{ $t('contact.form.subjects.assistance') }}</option>
+                  <option value="demande-devis">{{ $t('contact.form.subjects.quote') }}</option>
+                  <option value="pv-de-decoupage">{{ $t('contact.form.subjects.chassis') }}</option>
+                  <option value="pv-expertise-technique">{{ $t('contact.form.subjects.technical') }}</option>
+                  <option value="pv-retrait-carte-grise">{{ $t('contact.form.subjects.withdrawal') }}</option>
+                  <option value="autre">{{ $t('contact.form.subjects.other') }}</option>
                 </select>
               </div>
                 </div>
@@ -104,18 +104,18 @@
 
               <!-- Champ conditionnel pour "Autre" -->
               <div class="form-group" v-if="form.objet === 'autre'">
-                <label>Précisez votre objet <span class="required">*</span></label>
-                <input type="text" v-model="form.objetAutre" placeholder="Décrivez votre objet..." required />
+                <label>{{ $t('pages.contactPage.fields.otherSubject') }} <span class="required">*</span></label>
+                <input type="text" v-model="form.objetAutre" :placeholder="$t('pages.contactPage.fields.otherSubjectPlaceholder')" required />
               </div>
 
               <!-- Ligne 4 : Informations utiles (pleine largeur) -->
               <div class="form-group full-width">
-                <label>Informations utiles</label>
-                <textarea v-model="form.informations" rows="4" placeholder="Décrivez brièvement votre besoin..."></textarea>
+                <label>{{ $t('pages.contactPage.fields.message') }}</label>
+                <textarea v-model="form.informations" rows="4" :placeholder="$t('pages.contactPage.fields.messagePlaceholder')"></textarea>
               </div>
 
               <button type="submit" class="btn-submit" :disabled="loading">
-                {{ loading ? 'Envoi en cours...' : 'Envoyer le message' }}
+                {{ loading ? $t('pages.contactPage.fields.sending') : $t('pages.contactPage.fields.submit') }}
               </button>
 
               <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
@@ -126,21 +126,24 @@
           <!-- PARTIE DROITE : infos, carte, horaires, réseaux -->
           <div class="contact-right">
             <!-- Carte -->
-            <div class="contact-map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3309.182547019695!2d-6.908147484782224!3d33.92922608064114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDU1JzQ1LjIiTiA2wrA1NCcyMC42Ilc!5e0!3m2!1sfr!2sma!4v1644830000000!5m2!1sfr!2sma"
-                width="100%"
-                height="200"
-                style="border:0; border-radius: 12px;"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                title="Localisation AZK Expertise"
-              ></iframe>
-              <p class="map-credit">
-                <font-awesome-icon icon="map-marker-alt" /> Lot 116, Annasr, Res: Dar Dmana, Temara
-              </p>
-            </div>
+             <div class="contact-map">
+ <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2522.485241701272!2d-6.9355536256453!3d33.900717125718494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda70d04f01ddcb7%3A0x14e8548a73968971!2zQ2FiaW5ldCBBWksgRXhwZXJ0aXNlICjZhdmD2KrYqCDYp9mE2K7YqNmK2LEg2KfZhNmC2LbYp9im2Yog2LnYqNivINin2YTYudiy2YrZgNmA2YDYstin2YTZg9mB2YDZitmA2YDZgNmA2KrYqSAo2K7YqNmK2LHZhdmK2YPYp9mG2YDZgNmA2YrZgyDYudmA2YDZgNmA2KfZhTog2LPZitin2LHYp9iqLCDYr9ix2KfYrNin2Kog2YbYp9ix2YrYqSwg2LTYp9it2YbYp9iqICkp!5e1!3m2!1sen!2sma!4v1783425591780!5m2!1sen!2sma" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <div class="map-credit">
+    <font-awesome-icon icon="map-marker-alt" style="color: #e74c3c; margin-right: 6px;" />
+  <a 
+  href="https://www.google.com/maps/search/Police%2C%20Res%20Dar%20Dmana%20Lot%20116%2C%20Mag%20116%2C%20pr%C3%A9s%20%C3%A0%20l'arrondissement%20N%C2%B07%2C%20T%C3%A9mara%2012000" 
+  target="_blank" 
+  rel="noopener noreferrer"
+>
+ 
+  Ouvrir dans Google Maps
+</a>
+    <span style="color: #8a9aa8; margin: 0 8px;">|</span>
+    <span style="color: #8a9aa8; font-size: 0.8rem;">
+      Police, Res Dar Dmana Lot 116, Mag 116, prés à l'arrondissement N°7, Témara 12000
+    </span>
+  </div>
+</div>
 
            
           </div>
@@ -158,7 +161,7 @@
               <h2>A<span>zkexpertise</span></h2>
             </div>
             <p class="footer-description">
-              Cabinet d'expertise judiciaire, automobile et industrielle. Rigueur, indépendance, précision.
+              {{ $t('footer.description') }}
             </p>
           </div>
          <div class="footer-col">
@@ -170,7 +173,7 @@
         </ul>
       </div>
           <div class="footer-col">
-            <h3>CONTACT</h3>
+            <h3>{{ $t('footer.sections.contact') }}</h3>
             <ul class="footer-contact">
               <li>
                 <font-awesome-icon icon="phone" />
@@ -187,11 +190,11 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h3>SUIVEZ-NOUS</h3>
+            <h3>{{ $t('footer.sections.followUs') }}</h3>
             <div class="footer-social">
-              <a href="#" class="social-link" aria-label="Facebook"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
+              <a href="https://web.facebook.com/profile.php?id=61565082330331" class="social-link" aria-label="Facebook"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
               <a href="#" class="social-link" aria-label="LinkedIn"><font-awesome-icon :icon="['fab', 'linkedin-in']" /></a>
-              <a href="#" class="social-link" aria-label="Instagram"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
+              <a href="https://www.instagram.com/azkexpertise/" class="social-link" aria-label="Instagram"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
              <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
     <font-awesome-icon :icon="['fab', 'whatsapp']" />
   </a>
@@ -199,13 +202,9 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 AZK Expertise. Tous droits réservés.</p>
+          <p>{{ $t('footer.copyright') }}</p>
           <div class="footer-legal">
-            <a href="#">Mentions légales</a>
-            <span>|</span>
-            <a href="#">Politique de confidentialité</a>
-            <span>|</span>
-            <a href="#">CGU</a>
+            <a href="#">{{ $t('footer.legal') }}</a>
           </div>
         </div>
       </div>
@@ -215,8 +214,24 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import axios from 'axios'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { db, collection, addDoc } from '../firebase'
 
+const { locale, t } = useI18n()
+
+const changeLocale = (newLocale) => {
+  locale.value = newLocale
+  localStorage.setItem('locale', newLocale)
+  document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr'
+  document.documentElement.lang = newLocale
+}
+
+const router = useRouter()
+
+const openLogin = () => {
+  router.push('/connexion')
+}
 // État du formulaire
 const form = reactive({
   email: '',
@@ -239,8 +254,18 @@ const submitForm = async () => {
   errorMessage.value = ''
 
   try {
-    const response = await axios.post('/api/contact', form)
-    successMessage.value = 'Votre message a été envoyé avec succès !'
+    // ✅ Sauvegarder dans Firestore
+    await addDoc(collection(db, 'demandes'), {
+      nom: form.nom,
+      telephone: form.telephone,
+      email: form.email,
+      objet: form.objet === 'autre' ? form.objetAutre : form.objet,
+      message: form.informations,
+      statut: 'en_attente',
+      date: new Date().toISOString()
+    })
+
+    successMessage.value = t('contact.form.success')
     // Réinitialiser
     Object.assign(form, {
       email: '',
@@ -252,18 +277,16 @@ const submitForm = async () => {
       informations: ''
     })
   } catch (error) {
-    errorMessage.value = 'Erreur lors de l\'envoi. Veuillez réessayer.'
+    errorMessage.value = t('contact.form.error')
     console.error(error)
   } finally {
     loading.value = false
   }
 }
-const openLoginModal = () => {
-  // Tu peux ouvrir une modale, rediriger, ou juste afficher un message
-  alert('Page de connexion (à implémenter)')
-  // Ou router.push('/connexion') si tu veux garder la redirection
-}
+
+
 </script>
+
 
 <style scoped>
 /* ============ RESET & BASE ============ */

@@ -13,21 +13,21 @@
           </div>
         </div>
       <nav class="nav">
-  <router-link to="/">Accueil</router-link>
-  <router-link to="/qui-sommes-nous">À propos</router-link>
+  <router-link to="/">{{ $t('header.nav.home') }}</router-link>
+  <router-link to="/qui-sommes-nous">{{ $t('header.nav.about') }}</router-link>
   
   <!-- Menu déroulant Services -->
   <div class="dropdown">
-    <a href="#" class="nav-link dropdown-toggle">Services </a>
+    <a href="#" class="nav-link dropdown-toggle">{{ $t('header.nav.services') }} </a>
     <ul class="dropdown-menu">
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
   </div>
 
-  <router-link to="/contact">Contact</router-link>
+  <router-link to="/contact">{{ $t('header.nav.contact') }}</router-link>
 </nav>
        <!-- Langues + Connexion -->
 <div class="header-actions">
@@ -39,7 +39,7 @@
   </select>
 
   <!-- Bouton Connexion (style uniquement, pas de lien) -->
-  <button class="btn-connexion" @click="openLoginModal">
+  <button class="btn-connexion" @click="openLogin">
     {{ $t('header.nav.login') }}
   </button>
 </div>
@@ -49,16 +49,12 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="container hero-content">
-        <span class="hero-badge">Expertise Judiciaire &amp; Technique</span>
-        <h1>Des rapports d’expertise <span>reconnus par les Tribunaux</span></h1>
-        <p>
-          Évaluations de dommages, analyses de risques industriels, inventaires et 
-          conseils techniques. Nous mettons notre rigueur et notre indépendance 
-          au service des juridictions, des assureurs et des entreprises.
-        </p>
+        <span class="hero-badge">{{ $t('pages.expertise.hero.badge') }}</span>
+        <h1>{{ $t('pages.expertise.hero.title') }}</h1>
+        <p>{{ $t('pages.expertise.hero.description') }}</p>
         <div class="hero-actions">
-          <a href="#services" class="btn-primary">Découvrir nos services</a>
-          <a href="/contact" class="btn-secondary">Demander une expertise</a>
+          <a href="#services" class="btn-primary">{{ $t('pages.expertise.hero.buttons.discover') }}</a>
+          <a href="/contact" class="btn-secondary">{{ $t('pages.expertise.hero.buttons.request') }}</a>
         </div>
       </div>
     </section>
@@ -67,12 +63,9 @@
     <section class="services" id="services">
       <div class="container">
         <div class="section-head">
-          <span class="section-badge">Nos Expertises</span>
-          <h2>Des compétences pluridisciplinaires<br/> au service de la justice et de l’industrie</h2>
-          <p>
-            Nous intervenons sur l’ensemble du spectre de l’expertise technique et judiciaire, 
-            avec une approche scientifique et une parfaite connaissance du terrain.
-          </p>
+          <span class="section-badge">{{ $t('pages.expertise.services.badge') }}</span>
+          <h2>{{ $t('pages.expertise.services.title') }}</h2>
+          <p>{{ $t('pages.expertise.services.description') }}</p>
         </div>
 
         <div class="services-grid">
@@ -81,11 +74,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="car-crash" class="service-icon" />
             </div>
-            <h3>Expertise automobile &amp; poids lourds</h3>
-            <p>
-              Évaluation des dommages suite à des accidents de la circulation : 
-              voitures, motos, camions lourds et légers assurés.
-            </p>
+            <h3>{{ $t('pages.expertise.services.cards.0.title') }}</h3>
+            <p>{{ $t('pages.expertise.services.cards.0.description') }}</p>
           </div>
 
           <!-- Carte 2 -->
@@ -93,11 +83,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="industry" class="service-icon" />
             </div>
-            <h3>Expertise industrielle &amp; mécanique</h3>
-            <p>
-              Analyse des installations techniques, chaînes de production, 
-              machines et équipements. Évaluation des risques et défaillances.
-            </p>
+            <h3>{{ $t('pages.expertise.services.cards.1.title') }}</h3>
+            <p>{{ $t('pages.expertise.services.cards.1.description') }}</p>
           </div>
 
           <!-- Carte 3 -->
@@ -105,11 +92,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="balance-scale" class="service-icon" />
             </div>
-            <h3>Évaluation du patrimoine &amp; liquidation</h3>
-            <p>
-              Valorisation des actifs de l’entreprise dans le cadre d’une 
-              liquidation judiciaire ou d’un plan d’investissement.
-            </p>
+            <h3>{{ $t('pages.expertise.services.cards.2.title') }}</h3>
+            <p>{{ $t('pages.expertise.services.cards.2.description') }}</p>
           </div>
 
           <!-- Carte 4 -->
@@ -117,11 +101,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="clipboard-list" class="service-icon" />
             </div>
-            <h3>Inventaire &amp; réforme des stocks PDR</h3>
-            <p>
-              Chiffrage, réforme des pièces de rechange obsolètes, 
-              optimisation des stocks et gestion du parc matériel.
-            </p>
+            <h3>{{ $t('pages.expertise.services.cards.3.title') }}</h3>
+            <p>{{ $t('pages.expertise.services.cards.3.description') }}</p>
           </div>
 
           <!-- Carte 5 -->
@@ -129,11 +110,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="chart-line" class="service-icon" />
             </div>
-            <h3>Consulting technique &amp; amélioration</h3>
-            <p>
-              Audit, maintenance industrielle, outils d’analyse et d’amélioration 
-              (AMDEC, PDCA, Pareto, DEMATEL, AHP). Gestion de parc auto et TP.
-            </p>
+            <h3>{{ $t('pages.expertise.services.cards.4.title') }}</h3>
+            <p>{{ $t('pages.expertise.services.cards.4.description') }}</p>
           </div>
 
           <!-- Carte 6 -->
@@ -141,11 +119,8 @@
             <div class="icon-wrapper">
               <font-awesome-icon icon="file-signature" class="service-icon" />
             </div>
-            <h3>Rapports certifiés pour les tribunaux</h3>
-            <p>
-              Rapports d’expertise opposables, rédigés selon les normes judiciaires, 
-              avec une méthodologie rigoureuse et transparente.
-            </p>
+            <h3>{{ $t('pages.expertise.services.cards.5.title') }}</h3>
+            <p>{{ $t('pages.expertise.services.cards.5.description') }}</p>
           </div>
         </div>
       </div>
@@ -156,27 +131,27 @@
       <div class="container">
         <div class="methodo-content">
           <div class="methodo-text">
-            <span class="section-badge">Notre approche</span>
-            <h2>Une méthodologie éprouvée <br/>pour des expertises fiables</h2>
+            <span class="section-badge">{{ $t('pages.expertise.approach.badge') }}</span>
+            <h2>{{ $t('pages.expertise.approach.title') }}</h2>
             <ul>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Analyse approfondie</strong> – Inspection minutieuse des équipements et des documents techniques.</span>
+                <span><strong>{{ $t('pages.expertise.approach.items.0.strong') }}</strong> – {{ $t('pages.expertise.approach.items.0.text') }}</span>
               </li>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Évaluation objective</strong> – Chiffrage précis des dommages et de la valeur des actifs.</span>
+                <span><strong>{{ $t('pages.expertise.approach.items.1.strong') }}</strong> – {{ $t('pages.expertise.approach.items.1.text') }}</span>
               </li>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Rapports certifiés</strong> – Rédigés selon les normes judiciaires, reconnus par les tribunaux.</span>
+                <span><strong>{{ $t('pages.expertise.approach.items.2.strong') }}</strong> – {{ $t('pages.expertise.approach.items.2.text') }}</span>
               </li>
               <li>
                 <font-awesome-icon icon="check-circle" class="check-icon" />
-                <span><strong>Indépendance totale</strong> – Nous garantissons une impartialité absolue dans toutes nos missions.</span>
+                <span><strong>{{ $t('pages.expertise.approach.items.3.strong') }}</strong> – {{ $t('pages.expertise.approach.items.3.text') }}</span>
               </li>
             </ul>
-            <a href="/contact" class="btn-primary">Solliciter une expertise</a>
+            <a href="/contact" class="btn-primary">{{ $t('pages.expertise.approach.button') }}</a>
           </div>
           <div class="methodo-image">
             <img src="/images/jur.jpg" alt="Expertise technique" />
@@ -188,19 +163,17 @@
     <!-- ===================== CTA FINAL ===================== -->
     <section class="cta-final">
       <div class="container cta-content">
-        <h2>Besoin d’une expertise judiciaire ou technique ?</h2>
-        <p>
-          Contactez‑nous dès maintenant pour une première évaluation confidentielle.
-        </p>
+        <h2>{{ $t('pages.expertise.cta.title') }}</h2>
+        <p>{{ $t('pages.expertise.cta.description') }}</p>
         <div class="cta-buttons">
   <a href="/contact" class="btn-primary">
-    <font-awesome-icon icon="envelope" /> Nous contacter
+    <font-awesome-icon icon="envelope" /> {{ $t('pages.expertise.cta.buttons.contact') }}
   </a>
  <a href="mailto:azkexpertise@gmail.com?subject=Demande%20d'information&body=Bonjour%2C%20je%20souhaiterais%20avoir%20plus%20d'informations%20sur%20vos%20services." class="btn-secondary">
-  <font-awesome-icon icon="paper-plane" /> Envoyer un message
+  <font-awesome-icon icon="paper-plane" /> {{ $t('pages.expertise.cta.buttons.message') }}
 </a>
   <a href="tel:+212666698155" class="btn-secondary">
-    <font-awesome-icon icon="phone" /> Appeler
+    <font-awesome-icon icon="phone" /> {{ $t('pages.expertise.cta.buttons.call') }}
   </a>
 </div>
       </div>
@@ -215,22 +188,20 @@
               <img src="/images/LogoAzkexpertise-removebg-preview.png" alt="AZK Expertise" class="footer-logo-img" />
               <h2>Azk<span>expertise</span></h2>
             </div>
-            <p class="footer-description">
-              Cabinet d'expertise judiciaire, automobile et industrielle. Rigueur, indépendance, précision.
-            </p>
+            <p class="footer-description">{{ $t('footer.description') }}</p>
           </div>
           <div class="footer-col">
-            <h3>Services</h3>
+            <h3>{{ $t('header.nav.services') }}</h3>
             <ul class="footer-links">
           
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
           </div>
           <div class="footer-col">
-            <h3>Contact</h3>
+            <h3>{{ $t('header.nav.contact') }}</h3>
             <ul class="footer-contact">
               <li>
                 <font-awesome-icon icon="phone" />
@@ -247,11 +218,11 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h3>Suivez‑nous</h3>
+            <h3>{{ $t('footer.sections.followUs') }}</h3>
             <div class="footer-social">
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
+              <a href="https://web.facebook.com/profile.php?id=61565082330331" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
               <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'linkedin-in']" /></a>
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
+              <a href="https://www.instagram.com/azkexpertise/" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
               <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
     <font-awesome-icon :icon="['fab', 'whatsapp']" />
   </a>
@@ -259,13 +230,9 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 AZK Expertise. Tous droits réservés.</p>
+          <p>{{ $t('footer.copyright') }}</p>
           <div class="footer-legal">
-            <a href="#">Expertise Automobile</a>
-            <span>|</span>
-            <a href="#">Industrielle · Sinistre</a>
-            <span>|</span>
-            <a href="#">Maritime · Maroc</a>
+            <a href="#">{{ $t('footer.legal') }}</a>
           </div>
         </div>
       </div>
@@ -274,10 +241,18 @@
 </template>
 
 <script setup>
-const openLoginModal = () => {
-  // Tu peux ouvrir une modale, rediriger, ou juste afficher un message
-  alert('Page de connexion (à implémenter)')
-  // Ou router.push('/connexion') si tu veux garder la redirection
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const router = useRouter()
+const { locale, t } = useI18n()
+
+const changeLocale = (lang) => {
+  locale.value = lang
+}
+
+const openLogin = () => {
+  router.push('/connexion')
 }
 </script>
 

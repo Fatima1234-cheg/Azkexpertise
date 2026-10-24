@@ -50,7 +50,7 @@
           </div>
           <div class="stat-card">
             <div class="stat-content">
-              <button @click="openUsersModal" class="action-btn primary">
+              <button @click="openUsersModal" class="gerer">
                 <font-awesome-icon icon="users" /> Gérer les utilisateurs
               </button>
             </div>
@@ -82,9 +82,8 @@
                 <p><strong>Email:</strong> {{ request.email }}</p>
                 <p><strong>Téléphone:</strong> {{ request.telephone || request.phone }}</p>
                 <p><strong>Objet:</strong> {{ request.objet || request.subject }}</p>
-                <!-- Correction : Gérer "Autre" quel que soit le nom du champ -->
                 <p v-if="request.objetAutre || request.otherSubject || request.other">
-                  <strong>Autre Objet:</strong> 
+                  <strong>Autre Objet:</strong>
                   {{ request.objetAutre || request.otherSubject || request.other }}
                 </p>
                 <p v-if="request.informations || request.message">
@@ -232,6 +231,28 @@
       </div>
     </div>
 
+    <!-- ===================== TOAST CONTAINER ===================== -->
+    <div class="toast-container">
+      <div
+        v-for="(toast, index) in toasts"
+        :key="index"
+        :class="['toast', `toast-${toast.type}`, { 'toast-exit': toast.removing }]"
+      >
+        <span class="toast-icon">
+          <font-awesome-icon v-if="toast.type === 'success'" icon="check-circle" />
+          <font-awesome-icon v-else-if="toast.type === 'error'" icon="exclamation-circle" />
+          <font-awesome-icon v-else icon="info-circle" />
+        </span>
+        <div class="toast-content">
+          <strong>{{ toast.title }}</strong>
+          <p>{{ toast.message }}</p>
+        </div>
+        <button class="toast-close" @click="removeToast(index)">
+          <font-awesome-icon icon="times" />
+        </button>
+      </div>
+    </div>
+
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
       <div class="container">
@@ -247,6 +268,19 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import {
+  auth,
+  signOut,
+  db,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  onAuthStateChanged,
+  createUserAsAdmin,   // ✅ pour créer les users automatiquement
+  setDoc               // ✅ pour sauvegarder dans Firestore
+} from '@/firebase'
 
 const router = useRouter()
 
@@ -255,13 +289,12 @@ const user = ref({ name: '', email: '' })
 const contactRequests = ref([])
 const admins = ref([])
 
-// Modals
 const showUsersModal = ref(false)
 const showEditModal = ref(false)
 const showDeleteModal = ref(false)
 const showDeleteRequestModal = ref(false)
 
-const editMode = ref('add') // 'add' ou 'edit'
+const editMode = ref('add')
 const editIndex = ref(-1)
 const deleteTarget = ref(null)
 const deleteIndex = ref(-1)
@@ -274,79 +307,67 @@ const editForm = ref({
   mot_de_passe: ''
 })
 
-// ===== FORCER LA MIGRATION =====
-const forceMigrate = () => {
-  // Vérifier si des données existent avec l'ancienne clé
-  const oldData = localStorage.getItem('contactRequests')
-  if (oldData) {
-    localStorage.setItem('demandes', oldData)
-    console.log('✅ Migration des données effectuée depuis contactRequests vers demandes')
+// ===== TOAST SYSTEM =====
+const toasts = ref([])
+
+const addToast = (type, title, message, duration = 4000) => {
+  const toast = { type, title, message, removing: false }
+  toasts.value.push(toast)
+  setTimeout(() => removeToast(toasts.value.length - 1), duration)
+  return toast
+}
+
+const removeToast = (index) => {
+  if (index >= 0 && index < toasts.value.length) {
+    toasts.value[index].removing = true
+    setTimeout(() => toasts.value.splice(index, 1), 300)
   }
 }
 
-// ===== INIT =====
-const initAdmins = () => {
-  const stored = localStorage.getItem('admins')
-  if (stored) {
-    admins.value = JSON.parse(stored)
-  } else {
-    // Créer les 2 comptes par défaut
-    admins.value = [
-      {
-        nom_complet: 'Administrateur Principal',
-        email: 'admin@azkexpertise.ma',
-        mot_de_passe: 'admin123'
-      },
-      {
-        nom_complet: 'Gestionnaire',
-        email: 'gest@azkexpertise.ma',
-        mot_de_passe: 'gest123'
-      }
-    ]
-    localStorage.setItem('admins', JSON.stringify(admins.value))
+// ===== CHARGEMENT DEMANDES =====
+const loadRequests = async () => {
+  if (!auth.currentUser) {
+    console.warn('⚠️ loadRequests ignoré : pas authentifié')
+    return
   }
-}
 
-// ===== CHARGEMENT DES DEMANDES (avec migration) =====
-const loadRequests = () => {
-  // Essayer d'abord avec la clé 'demandes'
-  let data = localStorage.getItem('demandes')
-
-  // Si vide, essayer avec 'contactRequests' (ancienne clé)
-  if (!data) {
-    data = localStorage.getItem('contactRequests')
-    if (data) {
-      // Migrer les données vers la nouvelle clé
-      localStorage.setItem('demandes', data)
+  try {
+    const querySnapshot = await getDocs(collection(db, 'demandes'))
+    contactRequests.value = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+    console.log('📋 Demandes chargées :', contactRequests.value.length)
+  } catch (error) {
+    console.error('❌ Erreur chargement demandes:', error.code, error.message)
+    if (error.code === 'permission-denied') {
+      addToast('error', '🔒 Accès refusé', 'Vérifiez les règles Firestore')
+    } else {
+      addToast('error', '❌ Erreur', 'Impossible de charger les demandes')
     }
   }
-
-  contactRequests.value = data ? JSON.parse(data) : []
-  console.log('📋 Demandes chargées :', contactRequests.value.length)
 }
 
-// ===== AUTH =====
-const checkAuth = () => {
-  const userData = localStorage.getItem('user')
-  if (!userData) {
-    router.push('/connexion')
-  } else {
-    user.value = JSON.parse(userData)
+// ===== CHARGEMENT ADMINS (depuis Firestore) =====
+const loadAdmins = async () => {
+  if (!auth.currentUser) return
+
+  try {
+    const snap = await getDocs(collection(db, 'admins'))
+    admins.value = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+    console.log('👥 Admins chargés :', admins.value.length)
+  } catch (error) {
+    console.error('❌ Erreur chargement admins:', error.code, error.message)
+    if (error.code === 'permission-denied') {
+      addToast('error', '🔒 Accès refusé', 'Publiez les règles Firestore')
+    }
   }
 }
 
-// ===== UTILISATEURS (CRUD) =====
-const saveAdmins = () => {
-  localStorage.setItem('admins', JSON.stringify(admins.value))
-}
-
-const openUsersModal = () => {
+// ===== MODALS USERS =====
+const openUsersModal = async () => {
+  await loadAdmins()
   showUsersModal.value = true
 }
 
-const closeUsersModal = () => {
-  showUsersModal.value = false
-}
+const closeUsersModal = () => { showUsersModal.value = false }
 
 const openAddModal = () => {
   editMode.value = 'add'
@@ -358,8 +379,8 @@ const openEditModal = (admin, index) => {
   editMode.value = 'edit'
   editIndex.value = index
   editForm.value = {
-    nom_complet: admin.nom_complet,
-    email: admin.email,
+    nom_complet: admin.nom_complet || admin.name || '',
+    email: admin.email || '',
     mot_de_passe: ''
   }
   showEditModal.value = true
@@ -371,30 +392,76 @@ const closeEditModal = () => {
   editIndex.value = -1
 }
 
-const saveUser = () => {
+// ===== ✅ CRÉATION AUTOMATIQUE D'UN USER FIREBASE =====
+const saveUser = async () => {
+  // ===== AJOUT =====
   if (editMode.value === 'add') {
-    if (admins.value.some(a => a.email === editForm.value.email)) {
-      alert('Cet email est déjà utilisé.')
+    if (!editForm.value.nom_complet || !editForm.value.email || !editForm.value.mot_de_passe) {
+      addToast('error', '❌ Champs manquants', 'Tous les champs sont obligatoires')
       return
     }
-    admins.value.push({
-      nom_complet: editForm.value.nom_complet,
-      email: editForm.value.email,
-      mot_de_passe: editForm.value.mot_de_passe
-    })
-  } else {
-    const admin = admins.value[editIndex.value]
-    admin.nom_complet = editForm.value.nom_complet
-    admin.email = editForm.value.email
-    if (editForm.value.mot_de_passe) {
-      admin.mot_de_passe = editForm.value.mot_de_passe
+
+    try {
+      console.log('🆕 Création user Firebase :', editForm.value.email)
+
+      // 1️⃣ Créer dans Firebase Authentication (sans déconnecter l'admin)
+      const newUser = await createUserAsAdmin(
+        editForm.value.email.trim(),
+        editForm.value.mot_de_passe
+      )
+
+      console.log('✅ User Firebase créé — UID :', newUser.uid)
+
+      // 2️⃣ Sauvegarder les infos dans Firestore (collection "admins")
+      await setDoc(doc(db, 'admins', newUser.uid), {
+        uid: newUser.uid,
+        nom_complet: editForm.value.nom_complet,
+        email: editForm.value.email.trim(),
+        role: 'admin',
+        createdAt: new Date().toISOString()
+      })
+
+      addToast('success', '✅ Utilisateur créé', `${editForm.value.nom_complet} peut se connecter maintenant`)
+
+      await loadAdmins()
+      closeEditModal()
+
+    } catch (error) {
+      console.error('❌ Erreur création user:', error)
+
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          addToast('error', '❌ Email déjà utilisé', 'Cet email a déjà un compte Firebase')
+          break
+        case 'auth/weak-password':
+          addToast('error', '❌ Mot de passe faible', 'Minimum 6 caractères requis')
+          break
+        case 'auth/invalid-email':
+          addToast('error', '❌ Email invalide', 'Vérifiez le format')
+          break
+        default:
+          addToast('error', '❌ Erreur', error.message || 'Création impossible')
+      }
     }
+    return
   }
-  saveAdmins()
-  closeEditModal()
+
+  // ===== ÉDITION (nom uniquement, Firebase ne permet pas de changer l'email côté client) =====
+  try {
+    const admin = admins.value[editIndex.value]
+    await updateDoc(doc(db, 'admins', admin.id), {
+      nom_complet: editForm.value.nom_complet
+    })
+    addToast('success', '✅ Utilisateur modifié', 'Les informations ont été mises à jour')
+    await loadAdmins()
+    closeEditModal()
+  } catch (error) {
+    console.error(error)
+    addToast('error', '❌ Erreur', 'Modification impossible')
+  }
 }
 
-// ===== SUPPRESSION UTILISATEUR AVEC POPUP =====
+// ===== SUPPRESSION ADMIN =====
 const openDeleteModal = (admin, index) => {
   deleteTarget.value = admin
   deleteIndex.value = index
@@ -407,45 +474,46 @@ const closeDeleteModal = () => {
   deleteIndex.value = -1
 }
 
-const confirmDeleteUser = () => {
-  if (deleteIndex.value >= 0 && deleteIndex.value < admins.value.length) {
-    admins.value.splice(deleteIndex.value, 1)
-    saveAdmins()
+const confirmDeleteUser = async () => {
+  const admin = admins.value[deleteIndex.value]
+  if (!admin) return
+
+  try {
+    // ⚠️ Supprime uniquement le doc Firestore (pas le compte Firebase Auth)
+    await deleteDoc(doc(db, 'admins', admin.id))
+    addToast('success', '✅ Admin retiré', `${admin.nom_complet} a été retiré de la liste`)
+    await loadAdmins()
+  } catch (error) {
+    console.error(error)
+    addToast('error', '❌ Erreur', 'Suppression impossible')
   }
   closeDeleteModal()
 }
 
-// ===== GESTION DES DEMANDES =====
+// ===== GESTION DEMANDES =====
 const validatingIndex = ref(-1)
 
-// Valider une demande (sans API pour le moment)
 const validerDemande = async (index) => {
   const request = contactRequests.value[index]
   validatingIndex.value = index
 
   try {
-
-    // Envoi de l'email
     await axios.post('/api/contact/validate', {
       name: request.nom || request.name,
       email: request.email
     })
 
-    // Marquer la demande comme validée
+    await updateDoc(doc(db, 'demandes', request.id), { statut: 'validée' })
     request.statut = 'validée'
-    localStorage.setItem('demandes', JSON.stringify(contactRequests.value))
-
-    alert('✅ Demande validée et email envoyé !')
-
+    addToast('success', '✅ Demande validée', `Email envoyé à ${request.email}`)
   } catch (error) {
     console.error(error)
-    alert("Erreur lors de l'envoi de l'email.")
+    addToast('error', '❌ Erreur', "L'envoi de l'email a échoué")
   } finally {
     validatingIndex.value = -1
   }
 }
 
-// Suppression avec popup
 const openDeleteRequestModal = (index) => {
   deleteRequestTarget.value = contactRequests.value[index]
   deleteRequestIndex.value = index
@@ -458,10 +526,17 @@ const closeDeleteRequestModal = () => {
   deleteRequestIndex.value = -1
 }
 
-const confirmDeleteRequest = () => {
+const confirmDeleteRequest = async () => {
   if (deleteRequestIndex.value >= 0 && deleteRequestIndex.value < contactRequests.value.length) {
-    contactRequests.value.splice(deleteRequestIndex.value, 1)
-    localStorage.setItem('demandes', JSON.stringify(contactRequests.value))
+    const request = contactRequests.value[deleteRequestIndex.value]
+    try {
+      await deleteDoc(doc(db, 'demandes', request.id))
+      contactRequests.value.splice(deleteRequestIndex.value, 1)
+      addToast('success', '✅ Demande supprimée', `La demande de ${request.nom || request.name} a été supprimée`)
+    } catch (error) {
+      console.error(error)
+      addToast('error', '❌ Erreur', 'Impossible de supprimer la demande')
+    }
   }
   closeDeleteRequestModal()
 }
@@ -469,27 +544,37 @@ const confirmDeleteRequest = () => {
 // ===== LOGOUT =====
 const handleLogout = async () => {
   try {
-    await axios.post('/api/logout')
+    await signOut(auth)
   } catch (error) {
     console.error('Logout error:', error)
   } finally {
     localStorage.removeItem('auth_token')
     localStorage.removeItem('user')
+    localStorage.removeItem('rememberMe')
     router.push('/')
   }
 }
 
 // ===== LIFECYCLE =====
 onMounted(() => {
-  checkAuth()
-  initAdmins()
-  forceMigrate()
-  loadRequests()
+  onAuthStateChanged(auth, (firebaseUser) => {
+    if (!firebaseUser) {
+      console.warn('⚠️ Pas connecté → /connexion')
+      localStorage.removeItem('user')
+      router.push('/connexion')
+      return
+    }
+
+    console.log('✅ Firebase Auth prêt — UID :', firebaseUser.uid)
+    user.value = { name: firebaseUser.email, email: firebaseUser.email }
+
+    loadRequests()
+    loadAdmins()
+  })
 })
 </script>
 
 <style scoped>
-/* ===== Même style que votre code ===== */
 * {
   margin: 0;
   padding: 0;
@@ -611,8 +696,8 @@ onMounted(() => {
 
 .welcome-card {
   text-align: center;
-  margin-bottom: 50px;
-  padding: 40px;
+  margin-bottom: 40px;
+  padding: 30px;
   background: white;
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.08);
@@ -735,12 +820,12 @@ onMounted(() => {
   border-radius: 16px;
   padding: 25px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(198, 161, 91, 0.15);
+  border: 1px solid rgba(35, 23, 2, 0.15);
   transition: border-color 0.3s;
 }
 
 .request-card.request-validated {
-  border-color: #27ae60;
+  border-color: #1a3a5a;
   background: #f0faf4;
 }
 
@@ -780,11 +865,12 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
+/* ===== BOUTONS THEME ===== */
 .btn-valider {
-  background: #27ae60;
+  background: #1a3a5a;
   color: white;
   border: none;
-  padding: 8px 18px;
+  padding: 8px 20px;
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -793,21 +879,22 @@ onMounted(() => {
 }
 
 .btn-valider:hover:not(:disabled) {
-  background: #219a52;
+  background: #0a2a4a;
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
 }
 
 .btn-valider:disabled {
-  background: #a0d6b0;
+  background: #0a2a4a;
   cursor: default;
   opacity: 0.7;
 }
 
 .delete-btn {
-  background: #e74c3c;
+  background: #c52d1c;
   color: white;
   border: none;
-  padding: 8px 18px;
+  padding: 8px 20px;
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -818,68 +905,120 @@ onMounted(() => {
 .delete-btn:hover {
   background: #c0392b;
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
 }
 
-/* ADMIN ACTIONS */
-.admin-actions h2 {
-  color: #0a2a4a;
-  font-size: 1.8rem;
-  font-family: Georgia, serif;
-  margin-bottom: 25px;
+/* ===== TOAST NOTIFICATION ===== */
+.toast-container {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: 100%;
 }
 
-.actions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.action-btn {
+.toast {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px 16px 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 25px;
+  gap: 14px;
+  animation: slideInRight 0.4s ease;
+  border-left: 5px solid;
+  transform-origin: right;
+}
+
+.toast-success {
+  border-left-color: #27ae60;
+}
+
+.toast-error {
+  border-left-color: #e74c3c;
+}
+
+.toast-info {
+  border-left-color: #C6A15B;
+}
+
+.toast-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.toast-success .toast-icon {
+  color: #27ae60;
+}
+
+.toast-error .toast-icon {
+  color: #e74c3c;
+}
+
+.toast-info .toast-icon {
+  color: #C6A15B;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-content strong {
+  display: block;
+  color: #0a2a4a;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.toast-content p {
+  color: #3d4f5e;
+  font-size: 0.85rem;
+  margin: 2px 0 0 0;
+}
+
+.toast-close {
+  background: none;
   border: none;
-  border-radius: 16px;
-  font-size: 1.1rem;
-  width: 100%;
-  max-width: 300px;
-  font-weight: 600;
+  font-size: 1.2rem;
+  color: #8a9aa8;
   cursor: pointer;
-  transition: all 0.3s;
+  padding: 0 4px;
+  transition: color 0.3s;
+  flex-shrink: 0;
 }
 
-.action-btn.primary {
-  background: #0a2a4a;
-  color: white;
+.toast-close:hover {
+  color: #e74c3c;
 }
 
-.action-btn.primary:hover {
-  background: #1a3a5a;
-  transform: translateY(-3px);
+@keyframes slideInRight {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-.action-btn.secondary {
-  background: #C6A15B;
-  color: #0a2a4a;
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
 }
 
-.action-btn.secondary:hover {
-  background: #D4AF37;
-  transform: translateY(-3px);
-}
-
-.action-btn.tertiary {
-  background: #f8faff;
-  color: #0a2a4a;
-  border: 2px solid rgba(198, 161, 91, 0.3);
-}
-
-.action-btn.tertiary:hover {
-  background: white;
-  transform: translateY(-3px);
-  border-color: #C6A15B;
+.toast-exit {
+  animation: slideOutRight 0.3s ease forwards;
 }
 
 /* ===== MODALS ===== */
@@ -920,7 +1059,7 @@ onMounted(() => {
 }
 
 .modal-sm {
-  max-width: 500px;
+  max-width: 570px;
 }
 
 .modal-delete .modal-content {
@@ -1258,10 +1397,6 @@ onMounted(() => {
     margin-left: auto;
   }
 
-  .actions-grid {
-    grid-template-columns: 1fr;
-  }
-
   .admin-stats {
     grid-template-columns: 1fr;
   }
@@ -1269,5 +1404,26 @@ onMounted(() => {
   .modal-sm {
     max-width: 95%;
   }
+}
+
+@media (max-width: 480px) {
+  .toast-container {
+    top: 20px;
+    right: 15px;
+    left: 15px;
+    max-width: 100%;
+    width: auto;
+  }
+}
+
+.gerer {
+  background-color: #0a2a4a;
+  color: #C6A15B;
+  height: 80px;
+  width: 300px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 900;
 }
 </style>

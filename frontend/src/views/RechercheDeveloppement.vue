@@ -13,21 +13,21 @@
           </div>
         </div>
        <nav class="nav">
-  <router-link to="/">Accueil</router-link>
-  <router-link to="/qui-sommes-nous">À propos</router-link>
+  <router-link to="/">{{ $t('header.nav.home') }}</router-link>
+  <router-link to="/qui-sommes-nous">{{ $t('header.nav.about') }}</router-link>
   
   <!-- Menu déroulant Services -->
   <div class="dropdown">
-    <a href="#" class="nav-link dropdown-toggle">Services </a>
+    <a href="#" class="nav-link dropdown-toggle">{{ $t('header.nav.services') }}</a>
     <ul class="dropdown-menu">
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
   </div>
 
-  <router-link to="/contact">Contact</router-link>
+  <router-link to="/contact">{{ $t('header.nav.contact') }}</router-link>
 </nav>
         <!-- Langues + Connexion -->
 <div class="header-actions">
@@ -39,7 +39,7 @@
   </select>
 
   <!-- Bouton Connexion (style uniquement, pas de lien) -->
-  <button class="btn-connexion" @click="openLoginModal">
+  <button class="btn-connexion" @click="openLogin">
     {{ $t('header.nav.login') }}
   </button>
 </div>
@@ -49,16 +49,13 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="container hero-content">
-        <span class="hero-badge">Recherche &amp; Développement</span>
-        <h1>L’innovation au cœur <span>de notre métier</span></h1>
+        <span class="hero-badge">{{ $t('pages.research.hero.badge') }}</span>
+        <h1>{{ $t('pages.research.hero.title') }}</h1>
         <p>
-          Azkexpertise investit dans la digitalisation, la recherche et le 
-          développement pour améliorer ses services et rester à la pointe 
-          des évolutions techniques. Notre objectif : conjuguer expertise 
-          terrain et innovation technologique.
+          {{ $t('pages.research.hero.description') }}
         </p>
         <div class="hero-actions">
-          <a href="#projets" class="btn-primary">Nos projets</a>
+          <a href="#projets" class="btn-primary">{{ $t('pages.research.hero.button') }}</a>
          
         </div>
       </div>
@@ -69,31 +66,27 @@
       <div class="container">
         <div class="vision-content">
           <div class="vision-text">
-            <span class="section-badge">Notre vision</span>
-            <h2>Un cabinet qui évolue avec son temps</h2>
+            <span class="section-badge">{{ $t('pages.research.vision.badge') }}</span>
+            <h2>{{ $t('pages.research.vision.title') }}</h2>
             <p>
-              Chez AZK Expertise, nous croyons que l'excellence technique 
-              passe par l'innovation. C'est pourquoi nous avons engagé une 
-              démarche de digitalisation et de recherche pour améliorer 
-              nos processus et offrir un service toujours plus performant 
-              à nos clients.
+              {{ $t('pages.research.vision.description') }}
             </p>
             <div class="vision-grid">
               <div class="vision-item">
                 <font-awesome-icon icon="robot" class="vision-icon" />
-                <span>IA &amp; automatisation</span>
+                <span>{{ $t('pages.research.vision.items.0') }}</span>
               </div>
               <div class="vision-item">
                 <font-awesome-icon icon="database" class="vision-icon" />
-                <span>Big Data &amp; structuration</span>
+                <span>{{ $t('pages.research.vision.items.1') }}</span>
               </div>
               <div class="vision-item">
                 <font-awesome-icon icon="cloud" class="vision-icon" />
-                <span>Solutions cloud</span>
+                <span>{{ $t('pages.research.vision.items.2') }}</span>
               </div>
               <div class="vision-item">
                 <font-awesome-icon icon="shield-alt" class="vision-icon" />
-                <span>Cybersécurité</span>
+                <span>{{ $t('pages.research.vision.items.3') }}</span>
               </div>
             </div>
           </div>
@@ -108,11 +101,10 @@
     <section class="projects" id="projets">
       <div class="container">
         <div class="section-head">
-          <span class="section-badge">Projets R&D</span>
-          <h2>Nos projets de digitalisation</h2>
+          <span class="section-badge">{{ $t('pages.research.projects.badge') }}</span>
+          <h2>{{ $t('pages.research.projects.title') }}</h2>
           <p>
-            Dans le cadre de notre démarche d'innovation, nous développons 
-            trois projets majeurs pour améliorer notre efficacité et nos services.
+            {{ $t('pages.research.projects.description') }}
           </p>
         </div>
 
@@ -123,16 +115,14 @@
             <div class="project-icon-wrapper">
               <font-awesome-icon icon="globe" class="project-icon" />
             </div>
-            <h3>Site web professionnel</h3>
+            <h3>{{ $t('pages.research.projects.cards.0.title') }}</h3>
             <p>
-              Conception d'un site moderne, multilingue et sécurisé présentant 
-              les activités du cabinet. Interface d'administration, espace client 
-              et optimisation SEO.
+              {{ $t('pages.research.projects.cards.0.description') }}
             </p>
             <div class="project-tags">
-              <span>Responsive</span>
-              <span>Multilingue</span>
-              <span>Espace client</span>
+              <span>{{ $t('pages.research.projects.cards.0.tags.0') }}</span>
+              <span>{{ $t('pages.research.projects.cards.0.tags.1') }}</span>
+              <span>{{ $t('pages.research.projects.cards.0.tags.2') }}</span>
             </div>
           </div>
 
@@ -142,16 +132,14 @@
             <div class="project-icon-wrapper">
               <font-awesome-icon icon="file-alt" class="project-icon" />
             </div>
-            <h3>Application de rapports d'expertise</h3>
+            <h3>{{ $t('pages.research.projects.cards.1.title') }}</h3>
             <p>
-              Application interne pour la gestion et la production automatisée 
-              des rapports d'expertise. Gestion des dossiers, clients, modèles 
-              de rapports et export PDF.
+              {{ $t('pages.research.projects.cards.1.description') }}
             </p>
             <div class="project-tags">
-              <span>Automatisation</span>
-              <span>Export PDF</span>
-              <span>Tableau de bord</span>
+              <span>{{ $t('pages.research.projects.cards.1.tags.0') }}</span>
+              <span>{{ $t('pages.research.projects.cards.1.tags.1') }}</span>
+              <span>{{ $t('pages.research.projects.cards.1.tags.2') }}</span>
             </div>
           </div>
 
@@ -161,16 +149,14 @@
             <div class="project-icon-wrapper">
               <font-awesome-icon icon="database" class="project-icon" />
             </div>
-            <h3>Base de données pièces de rechange</h3>
+            <h3>{{ $t('pages.research.projects.cards.2.title') }}</h3>
             <p>
-              Structuration et développement d'une base de données des pièces 
-              de rechange avec classification par marque, type et prix. 
-              Recherche rapide et import/export Excel.
+              {{ $t('pages.research.projects.cards.2.description') }}
             </p>
             <div class="project-tags">
-              <span>Big Data</span>
-              <span>Recherche rapide</span>
-              <span>Import/Export</span>
+              <span>{{ $t('pages.research.projects.cards.2.tags.0') }}</span>
+              <span>{{ $t('pages.research.projects.cards.2.tags.1') }}</span>
+              <span>{{ $t('pages.research.projects.cards.2.tags.2') }}</span>
             </div>
           </div>
         </div>
@@ -183,28 +169,23 @@
       <div class="container">
         <div class="collab-content">
           <div class="collab-text">
-            <span class="section-badge">Open Innovation</span>
-            <h2>Ouverture vers la recherche<br/>et la formation</h2>
+            <span class="section-badge">{{ $t('pages.research.collaboration.badge') }}</span>
+            <h2>{{ $t('pages.research.collaboration.title') }}</h2>
             <p>
-              AZK Expertise est engagé dans une démarche d'open innovation 
-              et de collaboration avec les institutions académiques et les 
-              jeunes talents.
+              {{ $t('pages.research.collaboration.description') }}
             </p>
 
             <div class="collab-card">
-              <h4><font-awesome-icon icon="graduation-cap" /> Stages &amp; PFA</h4>
+              <h4><font-awesome-icon icon="graduation-cap" /> {{ $t('pages.research.collaboration.cards.0.title') }}</h4>
               <p>
-                Le cabinet accueille des stagiaires dans le cadre de projets 
-                de fin d'années. Actuellement, nous collaborons avec 
-                <strong>des étudiants </strong> dans le cadre du Programme 
-                PFA 2026 .
+                {{ $t('pages.research.collaboration.cards.0.description') }}
               </p>
             </div>
 
             <div class="collab-card">
-              <h4><font-awesome-icon icon="handshake" /> Partenariats</h4>
+              <h4><font-awesome-icon icon="handshake" /> {{ $t('pages.research.collaboration.cards.1.title') }}</h4>
               <p>
-                Nous sommes ouverts aux collaborations avec des associations .
+                {{ $t('pages.research.collaboration.cards.1.description') }}
               </p>
             </div>
 
@@ -230,21 +211,21 @@
               <h2>Azk<span>expertise</span></h2>
             </div>
             <p class="footer-description">
-              Cabinet d'expertise judiciaire, automobile et industrielle. Rigueur, indépendance, précision.
+              {{ $t('footer.description') }}
             </p>
           </div>
           <div class="footer-col">
-            <h3>Services</h3>
+            <h3>{{ $t('header.nav.services') }}</h3>
            <ul class="footer-links">
           
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
+      <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+      <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+      <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+      <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
     </ul>
           </div>
           <div class="footer-col">
-            <h3>Contact</h3>
+            <h3>{{ $t('footer.sections.contact') }}</h3>
             <ul class="footer-contact">
               <li>
                 <font-awesome-icon icon="phone" />
@@ -261,11 +242,11 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h3>Suivez‑nous</h3>
+            <h3>{{ $t('footer.sections.followUs') }}</h3>
             <div class="footer-social">
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
+              <a href="https://web.facebook.com/profile.php?id=61565082330331" class="social-link"><font-awesome-icon :icon="['fab', 'facebook-f']" /></a>
               <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'linkedin-in']" /></a>
-              <a href="#" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
+              <a href="https://www.instagram.com/azkexpertise/" class="social-link"><font-awesome-icon :icon="['fab', 'instagram']" /></a>
                <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
     <font-awesome-icon :icon="['fab', 'whatsapp']" />
   </a>
@@ -273,13 +254,9 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 AZK Expertise. Tous droits réservés.</p>
+          <p>{{ $t('footer.copyright') }}</p>
           <div class="footer-legal">
-            <a href="#">Expertise Automobile</a>
-            <span>|</span>
-            <a href="#">Industrielle · Sinistre</a>
-            <span>|</span>
-            <a href="#">Maritime · Maroc</a>
+            <a href="#">{{ $t('footer.legal') }}</a>
           </div>
         </div>
       </div>
@@ -288,10 +265,21 @@
 </template>
 
 <script setup>
-const openLoginModal = () => {
-  // Tu peux ouvrir une modale, rediriger, ou juste afficher un message
-  alert('Page de connexion (à implémenter)')
-  // Ou router.push('/connexion') si tu veux garder la redirection
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
+const { locale, t } = useI18n()
+const router = useRouter()
+
+const changeLocale = (newLocale) => {
+  locale.value = newLocale
+  localStorage.setItem('locale', newLocale)
+  document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr'
+  document.documentElement.lang = newLocale
+}
+
+const openLogin = () => {
+  router.push('/connexion')
 }
 </script>
 

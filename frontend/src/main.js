@@ -71,7 +71,8 @@ import {
   faEnvelope,
   faMapMarkerAlt,
   faChartLine,
-  faHandshake
+  faHandshake,
+  faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons'
 
 // ===================== ICÔNES BRANDS =====================
@@ -150,7 +151,8 @@ library.add(
   faFacebookF,
   faLinkedinIn,
   faInstagram,
-  faWhatsapp
+  faWhatsapp, 
+  faExclamationCircle
 )
 
 // ===================== APPLICATION =====================

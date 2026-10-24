@@ -12,37 +12,32 @@
             </div>
           </div>
         </div>
-       <nav class="nav">
-  <router-link to="/">Accueil</router-link>
-  <router-link to="/qui-sommes-nous">À propos</router-link>
-  
-  <!-- Menu déroulant Services -->
-  <div class="dropdown">
-    <a href="#" class="nav-link dropdown-toggle">Services </a>
-    <ul class="dropdown-menu">
-      <li><router-link to="/expertise-judiciaire">Expertise Judiciaire</router-link></li>
-      <li><router-link to="/audit-assistance-technique">Audit &amp; Assistance Technique</router-link></li>
-      <li><router-link to="/recherche-developpement">Recherche &amp; Développement</router-link></li>
-      <li><router-link to="/partenariats-conventions">Partenariats &amp; Conventions</router-link></li>
-    </ul>
-  </div>
+        <nav class="nav">
+          <router-link to="/">{{ $t('header.nav.home') }}</router-link>
+          <router-link to="/qui-sommes-nous">{{ $t('header.nav.about') }}</router-link>
 
-  <router-link to="/contact">Contact</router-link>
-</nav>
-       <!-- Langues + Connexion -->
-<div class="header-actions">
-  <!-- Liste déroulante pour les langues -->
-  <select class="langue-select" @change="changeLocale($event.target.value)">
-    <option value="fr" :selected="locale === 'fr'">FR</option>
-    <option value="ar" :selected="locale === 'ar'">AR</option>
-    <option value="en" :selected="locale === 'en'">EN</option>
-  </select>
+          <div class="dropdown">
+            <a href="#" class="nav-link dropdown-toggle">{{ $t('header.nav.services') }}</a>
+            <ul class="dropdown-menu">
+              <li><router-link to="/expertise-judiciaire">{{ $t('services.items.0.title') }}</router-link></li>
+              <li><router-link to="/audit-assistance-technique">{{ $t('services.items.1.title') }}</router-link></li>
+              <li><router-link to="/recherche-developpement">{{ $t('services.items.2.title') }}</router-link></li>
+              <li><router-link to="/partenariats-conventions">{{ $t('services.items.3.title') }}</router-link></li>
+            </ul>
+          </div>
 
-  <!-- Bouton Connexion (style uniquement, pas de lien) -->
-  <button class="btn-connexion" @click="openLoginModal">
-    {{ $t('header.nav.login') }}
-  </button>
-</div>
+          <router-link to="/contact">{{ $t('header.nav.contact') }}</router-link>
+        </nav>
+        <div class="header-actions">
+          <select class="langue-select" @change="changeLocale($event.target.value)">
+            <option value="fr" :selected="locale === 'fr'">FR</option>
+            <option value="ar" :selected="locale === 'ar'">AR</option>
+            <option value="en" :selected="locale === 'en'">EN</option>
+          </select>
+          <button class="btn-connexion" @click="openLogin">
+            {{ $t('header.nav.login') }}
+          </button>
+        </div>
       </div>
     </header>
 
@@ -50,13 +45,9 @@
     <section class="about-hero">
       <div class="about-hero-overlay"></div>
       <div class="container about-hero-content">
-        <span class="about-hero-badge">Qui sommes-nous</span>
-        <h1><span>L'expertise qui fait la différence</span></h1>
-        <p>
-          Grâce à une solide expérience et à une approche fondée sur l'indépendance, la précision et l'intégrité, 
-          notre cabinet réalise des expertises techniques de référence dans les domaines automobile, 
-          mécanique et industriel, afin d'accompagner chaque décision avec fiabilité et objectivité.
-        </p>
+        <span class="about-hero-badge">{{ $t('pages.about.hero.badge') }}</span>
+        <h1><span>{{ $t('pages.about.hero.title') }}</span></h1>
+        <p>{{ $t('pages.about.hero.description') }}</p>
       </div>
     </section>
 
@@ -64,158 +55,134 @@
     <section class="cabinet-definition">
       <div class="container">
         <div class="cabinet-definition-content">
-          <span class="definition-badge">Notre Cabinet</span>
-          <h2>Une expertise pluridisciplinaire, reconnue et indépendante</h2>
-          <p>
-            <strong>AZK Expertise</strong> est un cabinet d'expertise technique
-            basé à Temara, agréé par le Ministère de la Justice du Maroc.
-            Nous intervenons dans les domaines <strong>automobile, technique
-            et judiciaire</strong> pour apporter des évaluations objectives,
-            rigoureuses et parfaitement documentées.
-          </p>
-          <p>
-            Notre ADN : une <strong>approche scientifique</strong> couplée à une
-            <strong>connaissance terrain</strong> acquise au fil de milliers de
-            missions. Que ce soit pour un sinistre complexe, un litige technique
-            ou une contre-expertise, nous mettons notre indépendance et notre
-            intégrité au cœur de chaque rapport.
-          </p>
+          <span class="definition-badge">{{ $t('pages.about.cabinet.badge') }}</span>
+          <h2>{{ $t('pages.about.cabinet.title') }}</h2>
+          <p>{{ $t('pages.about.cabinet.paragraph1') }}</p>
+          <p>{{ $t('pages.about.cabinet.paragraph2') }}</p>
           <div class="cabinet-signature">
-            <span>— Rigueur, transparence, confidentialité —</span>
+            <span>{{ $t('pages.about.cabinet.signature') }}</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== EXPERT PROFILE ===================== -->
- <!-- ===================== EXPERT PROFILE (style image) ===================== --><!-- ===================== EXPERT PROFILE (style héroïque) ===================== -->
-<!-- ===================== EXPERT PROFILE (style héroïque) ===================== -->
-<section class="expert-hero">
-  <div class="container hero-grid">
-    <!-- Colonne gauche : texte (inchangé) -->
-    <div class="hero-text">
-      <div class="hero-eyebrow">
-        <span class="line"></span>
-        <span class="eyebrow">Fiche de présentation de l'expert</span>
-      </div>
-      <h1>EL KFITA <em>Abdelaziz</em></h1>
-      <p class="subtitle">Expert Judiciaire Assermenté — Mécanique Générale</p>
-      <p class="lede">
-        Ingénieur d'État en Génie Mécanique et Docteur en Génie Industriel, 
-        spécialisé dans l'expertise technique, judiciaire, 
-        industrielle et automobile, avec une approche fondée sur la rigueur, 
-        l'indépendance et l'excellence.
-      </p>
-      <div class="hero-actions">
-        <a href="/contact" class="btn btn-or">Demander une expertise</a>
-       
-      </div>
-      <div class="hero-meta">
-        <div>
-          <strong>Assermenté</strong>
-          <span>Ministère de la Justice</span>
+    <!-- ===================== EXPERT PROFILE (style héroïque) ===================== -->
+    <section class="expert-hero">
+      <div class="container hero-grid">
+        <!-- Colonne gauche : texte -->
+        <div class="hero-text">
+          <div class="hero-eyebrow">
+            <span class="line"></span>
+            <span class="eyebrow">{{ $t('pages.about.profile.eyebrow') }}</span>
+          </div>
+          <h1>{{ $t('pages.about.profile.name') }}</h1>
+          <p class="subtitle">{{ $t('pages.about.profile.subtitle') }}</p>
+          <p class="lede">{{ $t('pages.about.profile.lede') }}</p>
+          <div class="hero-actions">
+            <a href="/contact" class="btn btn-or">{{ $t('pages.about.profile.button') }}</a>
+          </div>
+          <div class="hero-meta">
+            <div>
+              <strong>{{ $t('pages.about.profile.meta.0.label') }}</strong>
+              <span>{{ $t('pages.about.profile.meta.0.value') }}</span>
+            </div>
+            <div>
+              <strong>{{ $t('pages.about.profile.meta.1.label') }}</strong>
+              <span>{{ $t('pages.about.profile.meta.1.value') }}</span>
+            </div>
+            <div>
+              <strong>{{ $t('pages.about.profile.meta.2.label') }}</strong>
+              <span>{{ $t('pages.about.profile.meta.2.value') }}</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <strong>Docteur</strong>
-          <span>Génie Industriel</span>
-        </div>
-        <div>
-          <strong>Consultant</strong>
-          <span>Technique &amp; Académique</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Colonne droite : portrait avec PHOTO -->
-    <div class="portrait-wrap">
-      <div class="portrait">
-        <!-- fond technique (engrenages) -->
-        <svg class="gear-bg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="80" stroke="#C6A15B" stroke-width="0.5"/>
-          <circle cx="100" cy="100" r="60" stroke="#C6A15B" stroke-width="0.5"/>
-          <path d="M100 20 L104 36 L96 36 Z" fill="#C6A15B"/>
-          <path d="M100 180 L104 164 L96 164 Z" fill="#C6A15B"/>
-          <path d="M20 100 L36 96 L36 104 Z" fill="#C6A15B"/>
-          <path d="M180 100 L164 96 L164 104 Z" fill="#C6A15B"/>
-        </svg>
-         <span class="initials">EA</span>
-        <!-- PHOTO DE L'EXPERT (remplace le monogramme) 
-        <img src="/images/kfita.png" alt="Mr. EL KFITA Abdelaziz" class="expert-photo-circle" />   -->
-      </div>
-   
-      <!-- Sceau officiel (inchangé) -->
-      <svg class="seal" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="60" cy="60" r="54" fill="#0A2540" stroke="#C6A15B" stroke-width="2"/>
-        <circle cx="60" cy="60" r="46" fill="none" stroke="#C6A15B" stroke-width="1"/>
-        <path id="sealCircle" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" fill="none"/>
-        <text font-family="'JetBrains Mono', monospace" font-size="8.3" letter-spacing="2" fill="#E8EDF2">
-          <textPath href="#sealCircle" startOffset="2%">EXPERT • ASSERMENTÉ • CASABLANCA •</textPath>
-        </text>
-        <g transform="translate(60,60)">
-          <path d="M0,-16 L0,12 M-14,-6 L14,-6 M-14,-6 L-18,2 L-10,2 Z M14,-6 L10,2 L18,2 Z M-16,12 L16,12" stroke="#C6A15B" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-        </g>
-      </svg>
-    </div>
-  </div>
-</section>
+        <!-- Colonne droite : portrait avec PHOTO DE L'EXPERT -->
+        <div class="portrait-wrap">
+          <div class="portrait">
+            <!-- fond technique (engrenages) -->
+            <svg class="gear-bg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="80" stroke="#C6A15B" stroke-width="0.5"/>
+              <circle cx="100" cy="100" r="60" stroke="#C6A15B" stroke-width="0.5"/>
+              <path d="M100 20 L104 36 L96 36 Z" fill="#C6A15B"/>
+              <path d="M100 180 L104 164 L96 164 Z" fill="#C6A15B"/>
+              <path d="M20 100 L36 96 L36 104 Z" fill="#C6A15B"/>
+              <path d="M180 100 L164 96 L164 104 Z" fill="#C6A15B"/>
+            </svg>
 
-<!-- ===================== BANDEAU DES DOMAINES ===================== -->
-<div class="domains-strip">
-  <div class="container domains-row">
-    <div class="domain-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17h10M5 21h14M12 3v8m0 0l-4-4m4 4l4-4M5 11h14l-2 6H7z"/></svg>
-      Etude
+            <!-- ✅ PHOTO DE L'EXPERT (remplace le monogramme "EA") -->
+            <img
+              src="/images/kfitaimage.png"
+              alt="Mr. EL KFITA Abdelaziz"
+              class="expert-photo-circle"
+            />
+          </div>
+
+          <!-- Sceau officiel -->
+          <svg class="seal" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="54" fill="#0A2540" stroke="#C6A15B" stroke-width="2"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#C6A15B" stroke-width="1"/>
+            <path id="sealCircle" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" fill="none"/>
+            <text font-family="'JetBrains Mono', monospace" font-size="8.3" letter-spacing="2" fill="#E8EDF2">
+              <textPath href="#sealCircle" startOffset="2%">EXPERT • ASSERMENTÉ • Temara Rabat •</textPath>
+            </text>
+            <g transform="translate(60,60)">
+              <path d="M0,-16 L0,12 M-14,-6 L14,-6 M-14,-6 L-18,2 L-10,2 Z M14,-6 L10,2 L18,2 Z M-16,12 L16,12" stroke="#C6A15B" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BANDEAU DES DOMAINES ===================== -->
+    <div class="domains-strip">
+      <div class="container domains-row">
+        <div class="domain-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 17h10M5 21h14M12 3v8m0 0l-4-4m4 4l4-4M5 11h14l-2 6H7z"/></svg>
+          {{ $t('pages.about.domains.strip.0') }}
+        </div>
+        <div class="domain-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="9" width="5" height="11"/><rect x="10" y="5" width="5" height="15"/><rect x="16" y="12" width="4" height="8"/></svg>
+          {{ $t('pages.about.domains.strip.1') }}
+        </div>
+        <div class="domain-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18l2-7h14l2 7M5 11V6h10v5M9 6V3h2v3"/><path d="M2 21c2 0 2-1.5 4-1.5S8 21 10 21s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/></svg>
+          {{ $t('pages.about.domains.strip.2') }}
+        </div>
+        <div class="domain-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 4.5v2L12 13 3 8.5v-2L12 2z"/><path d="M3 8.5V17l9 4.5 9-4.5V8.5"/></svg>
+          {{ $t('pages.about.domains.strip.3') }}
+        </div>
+        <div class="domain-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 006 0L7 7zM17 7l-3 7a3 3 0 006 0L17 7z"/></svg>
+          {{ $t('pages.about.domains.strip.4') }}
+        </div>
+      </div>
     </div>
-    <div class="domain-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="9" width="5" height="11"/><rect x="10" y="5" width="5" height="15"/><rect x="16" y="12" width="4" height="8"/></svg>
-      Expertise Technique
-    </div>
-    <div class="domain-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18l2-7h14l2 7M5 11V6h10v5M9 6V3h2v3"/><path d="M2 21c2 0 2-1.5 4-1.5S8 21 10 21s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/></svg>
-      Mécanique
-    </div>
-    <div class="domain-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 4.5v2L12 13 3 8.5v-2L12 2z"/><path d="M3 8.5V17l9 4.5 9-4.5V8.5"/></svg>
-      Auto & Matérile Industriel
-    </div>
-    <div class="domain-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 006 0L7 7zM17 7l-3 7a3 3 0 006 0L17 7z"/></svg>
-      Judiciaire
-    </div>
-  </div>
-</div>
 
     <!-- ===================== EXPERTISES & DOMAINES ===================== -->
     <section class="domaines-section">
       <div class="container">
         <div class="domaines-header">
-          <span class="domaines-badge">NOS DOMAINES</span>
-          <h2>Des compétences pluridisciplinaires</h2>
+          <span class="domaines-badge">{{ $t('pages.about.domains.badge') }}</span>
+          <h2>{{ $t('pages.about.domains.title') }}</h2>
         </div>
         <div class="domaines-grid">
           <div class="domaine-card">
-            
-            <h3>Expertise Technique et Audit des Équipements</h3>
-            <p>Nous réalisons des analyses techniques approfondies des infrastructures et équipements 
-              afin d’évaluer leur état, leur performance et leur conformité.</p>
+            <h3>{{ $t('pages.about.domains.cards.0.title') }}</h3>
+            <p>{{ $t('pages.about.domains.cards.0.description') }}</p>
           </div>
           <div class="domaine-card">
-         
-            <h3>Maintenance, Support Technique et Gestion des Actifs</h3>
-            <p>Nous accompagnons les entreprises dans la fiabilisation de leurs équipements et
-               la maîtrise des coûts d’exploitation.</p>
+            <h3>{{ $t('pages.about.domains.cards.1.title') }}</h3>
+            <p>{{ $t('pages.about.domains.cards.1.description') }}</p>
           </div>
           <div class="domaine-card">
-           
-            <h3>Sécurité, Qualité et Optimisation des Processus</h3>
-            <p>Nous aidons les organisations à améliorer leurs processus tout en renforçant 
-              la sécurité et la conformité réglementaire.</p>
+            <h3>{{ $t('pages.about.domains.cards.2.title') }}</h3>
+            <p>{{ $t('pages.about.domains.cards.2.description') }}</p>
           </div>
           <div class="domaine-card">
-           
-            <h3>Conseil, Études et Assistance aux Projets</h3>
-            <p>Nous apportons une expertise stratégique pour accompagner 
-              les projets techniques et les prises de décision.</p>
+            <h3>{{ $t('pages.about.domains.cards.3.title') }}</h3>
+            <p>{{ $t('pages.about.domains.cards.3.description') }}</p>
           </div>
         </div>
       </div>
@@ -231,19 +198,19 @@
               <h2>Azk<span>expertise</span></h2>
             </div>
             <p class="footer-description">
-              Cabinet d'expertise judiciaire, automobile et industrielle. Rigueur, indépendance, précision.
+              {{ $t('footer.description') }}
             </p>
           </div>
-            <div class="footer-col">
-        <h3>{{ $t('footer.sections.cabinet') }}</h3>
-        <ul class="footer-links">
-          <li><a href="#">{{ $t('footer.links.about') }}</a></li>
-<li><a href="/#services">{{ $t('footer.links.services') }}</a></li>
-          <li><a href="/contact">{{ $t('footer.links.contact') }}</a></li>
-        </ul>
-      </div>
           <div class="footer-col">
-            <h3>CONTACT</h3>
+            <h3>{{ $t('footer.sections.cabinet') }}</h3>
+            <ul class="footer-links">
+              <li><router-link to="/qui-sommes-nous">{{ $t('footer.links.about') }}</router-link></li>
+              <li><router-link to="/#services">{{ $t('footer.links.services') }}</router-link></li>
+              <li><router-link to="/contact">{{ $t('footer.links.contact') }}</router-link></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>{{ $t('footer.sections.contact') }}</h3>
             <ul class="footer-contact">
               <li>
                 <font-awesome-icon icon="phone" />
@@ -255,36 +222,32 @@
               </li>
               <li>
                 <font-awesome-icon icon="map-marker-alt" />
-                <span>Lot 116, Annasr, Res: Dar Dmana, Temara</span>
+                <span>{{ $t('footer.address') }}</span>
               </li>
             </ul>
           </div>
           <div class="footer-col">
-            <h3>SUIVEZ-NOUS</h3>
+            <h3>{{ $t('footer.sections.followUs') }}</h3>
             <div class="footer-social">
-              <a href="#" class="social-link">
+              <a href="https://web.facebook.com/profile.php?id=61565082330331" class="social-link">
                 <font-awesome-icon :icon="['fab', 'facebook-f']" />
               </a>
-              <a href="#" class="social-link">
+              <a href="https://www.linkedin.com/feed/" class="social-link">
                 <font-awesome-icon :icon="['fab', 'linkedin-in']" />
               </a>
-              <a href="#" class="social-link" aria-label="Instagram">
+              <a href="https://www.instagram.com/azkexpertise/" class="social-link" aria-label="Instagram">
                 <font-awesome-icon :icon="['fab', 'instagram']" />
               </a>
-               <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
-    <font-awesome-icon :icon="['fab', 'whatsapp']" />
-  </a>
+              <a href="https://wa.me/212707795145?text=Bonjour%20AZK%20Expertise%2C%20j%27aimerais%20vous%20contacter" class="social-link" aria-label="WhatsApp" target="_blank">
+                <font-awesome-icon :icon="['fab', 'whatsapp']" />
+              </a>
             </div>
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 AZK Expertise. Tous droits réservés.</p>
+          <p>{{ $t('footer.copyright') }}</p>
           <div class="footer-legal">
-            <a href="#">Expertise Automobile</a>
-            <span>|</span>
-            <a href="#">Industrielle · Sinistre</a>
-            <span>|</span>
-            <a href="#">Maritime · Maroc</a>
+            <a href="#">{{ $t('footer.legal') }}</a>
           </div>
         </div>
       </div>
@@ -293,10 +256,18 @@
 </template>
 
 <script setup>
-const openLoginModal = () => {
-  // Tu peux ouvrir une modale, rediriger, ou juste afficher un message
-  alert('Page de connexion (à implémenter)')
-  // Ou router.push('/connexion') si tu veux garder la redirection
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+const { locale, t } = useI18n()
+const router = useRouter()
+const changeLocale = (newLocale) => {
+  locale.value = newLocale
+  localStorage.setItem('locale', newLocale)
+  document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr'
+  document.documentElement.lang = newLocale
+}
+const openLogin = () => {
+  router.push('/connexion')
 }
 </script>
 
@@ -508,7 +479,7 @@ const openLoginModal = () => {
 /* ============ HERO ABOUT ============ */
 .about-hero {
   position: relative;
-background-color: #0A2540;
+  background-color: #0A2540;
   min-height: 70vh;
   display: flex;
   align-items: center;
@@ -532,7 +503,7 @@ background-color: #0A2540;
   z-index: 2;
   max-width: 1000px;
   text-align: justify;
-  padding-left:0px;
+  padding-left: 0px;
 }
 
 .about-hero-badge {
@@ -547,7 +518,7 @@ background-color: #0A2540;
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 20px;
-  font-family: Georgia ;
+  font-family: Georgia;
 }
 
 .about-hero-content h1 {
@@ -626,8 +597,6 @@ background-color: #0A2540;
   font-style: italic;
 }
 
-/* ============ EXPERT PROFILE ============ */
-/* ============ EXPERT PROFILE (style image) ============ */
 /* ============ EXPERT HERO ============ */
 .expert-hero {
   background:
@@ -637,7 +606,7 @@ background-color: #0A2540;
   padding: 40px 0 60px;
   position: relative;
   overflow: hidden;
-  margin-top: 20px; /* ajustez selon votre layout */
+  margin-top: 20px;
 }
 
 .expert-hero::before {
@@ -740,18 +709,16 @@ background-color: #0A2540;
 }
 
 .btn-or {
-  background:transparent;
+  background: transparent;
   border: 1px solid #C6A15B;
- border-radius: 5px;
-  color:#b08a4a;
- width: 83%;
+  border-radius: 5px;
+  color: #b08a4a;
+  width: 83%;
   font-size: 16px;
- 
 }
-.btn-or:hover {
- 
-  transform: translateY(-1px);
 
+.btn-or:hover {
+  transform: translateY(-1px);
 }
 
 .btn-outline {
@@ -759,6 +726,7 @@ background-color: #0A2540;
   color: #FFFFFF;
   border: 1.5px solid rgba(255,255,255,0.35);
 }
+
 .btn-outline:hover {
   border-color: #C6A15B;
   color: #C6A15B;
@@ -803,6 +771,7 @@ background-color: #0A2540;
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden; /* ✅ pour que l'image reste dans le cercle */
   box-shadow: 0 30px 60px -20px rgba(0,0,0,0.55), inset 0 0 0 8px rgba(255,255,255,0.02);
 }
 
@@ -812,6 +781,8 @@ background-color: #0A2540;
   inset: 14px;
   border-radius: 50%;
   border: 1px solid rgba(198,161,91,0.25);
+  pointer-events: none;
+  z-index: 2; /* ✅ au-dessus de la photo */
 }
 
 .portrait .gear-bg {
@@ -820,6 +791,7 @@ background-color: #0A2540;
   opacity: 0.16;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
 .portrait .initials {
@@ -832,15 +804,7 @@ background-color: #0A2540;
   z-index: 1;
 }
 
-.seal {
-  position: absolute;
-  bottom: -6px;
-  right: 6px;
-  width: 118px;
-  height: 118px;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
-}
-/* Photo dans le portrait */
+/* ✅ Photo dans le portrait */
 .portrait .expert-photo-circle {
   width: 100%;
   height: 100%;
@@ -848,7 +812,19 @@ background-color: #0A2540;
   border-radius: 50%;
   position: relative;
   z-index: 1;
+  display: block;
 }
+
+.seal {
+  position: absolute;
+  bottom: -6px;
+  right: 6px;
+  width: 118px;
+  height: 118px;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
+  z-index: 3; /* ✅ au-dessus du portrait */
+}
+
 /* ============ DOMAINS STRIP ============ */
 .domains-strip {
   background: #FFFFFF;
@@ -920,225 +896,6 @@ background-color: #0A2540;
   .btn {
     width: 100%;
     justify-content: center;
-  }
-}
-.expert-section {
-  padding: 80px 0;
-  background: #E8EDF2;
-}
-
-.expert-card {
-  display: flex;
-  align-items: stretch;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  transition: transform 0.3s;
-}
-
-.expert-photo {
-  flex: 0 0 300px;
-  min-height: 400px;
-  background: #0A2540; /* fallback */
-}
-
-.expert-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.expert-infos {
-  flex: 1;
-  padding: 45px 50px 40px 45px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.expert-name {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-
-.expert-name .nom {
-  font-size: 3.8rem;
-  font-weight: 800;
-  color: #0A2540;
-  letter-spacing: 2px;
-  font-family: Georgia, serif;
-}
-
-.expert-name .prenom {
-  font-size: 2rem;
-  font-weight: 300;
-  color: #2C3E50;
-  font-family: Georgia, serif;
-  margin-top: -6px;
-}
-
-.expert-titre {
-  font-size: 1.1rem;
-  color: #C6A15B;
-  font-weight: 600;
-  margin-bottom: 18px;
-  letter-spacing: 0.5px;
-  font-family: Georgia, serif;
-}
-
-.expert-description {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: #2C3E50;
-  margin-bottom: 28px;
-  max-width: 600px;
-}
-
-/* Boutons */
-.expert-actions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-}
-
-.btn-primary,
-.btn-secondary {
-  padding: 12px 32px;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: none;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.btn-primary {
-  background: #C6A15B;
-  color: #0A2540;
-}
-
-.btn-primary:hover {
-  background: #b08a4a;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(198, 161, 91, 0.3);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: #C6A15B;
-  border: 2px solid #C6A15B;
-}
-
-.btn-secondary:hover {
-  background: #C6A15B;
-  color: #0A2540;
-  transform: translateY(-2px);
-}
-
-/* Badges */
-.expert-badges {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-.badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #F4F6F9;
-  padding: 8px 18px 8px 14px;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #0A2540;
-  border: 1px solid #E0E5EC;
-}
-
-.badge-icon {
-  color: #C6A15B;
-  font-size: 1rem;
-}
-
-/* Étiquettes en bas (comme sur l'image) */
-.expert-tags {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  border-top: 1px solid #E8EDF2;
-  padding-top: 20px;
-  margin-top: 5px;
-}
-
-.expert-tags span {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #7F8C8D;
-  text-transform: uppercase;
-  background: #F4F6F9;
-  padding: 4px 14px;
-  border-radius: 20px;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-  .expert-card {
-    flex-direction: column;
-  }
-  .expert-photo {
-    flex: 0 0 auto;
-    height: 300px;
-    min-height: auto;
-  }
-  .expert-infos {
-    padding: 35px 30px;
-  }
-  .expert-name .nom {
-    font-size: 2.8rem;
-  }
-  .expert-name .prenom {
-    font-size: 1.6rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .expert-photo {
-    height: 220px;
-  }
-  .expert-infos {
-    padding: 25px 20px;
-  }
-  .expert-name .nom {
-    font-size: 2.2rem;
-  }
-  .expert-name .prenom {
-    font-size: 1.3rem;
-  }
-  .expert-titre {
-    font-size: 0.95rem;
-  }
-  .btn-primary,
-  .btn-secondary {
-    width: 100%;
-    text-align: center;
-  }
-  .expert-actions {
-    flex-direction: column;
-  }
-  .expert-badges {
-    gap: 12px;
-  }
-  .badge {
-    font-size: 0.75rem;
-    padding: 6px 14px;
   }
 }
 
@@ -1486,6 +1243,7 @@ background-color: #0A2540;
     padding: 0 15px;
   }
 }
+
 /* ============ LANGUE SELECT ============ */
 .langue-select {
   background: transparent;
