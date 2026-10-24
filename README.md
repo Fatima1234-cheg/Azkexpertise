@@ -1,8 +1,11 @@
 <div align="center">
 
-# ⚖️ Site Vitrine Multilingue pour un Cabinet de Conseil
+#  Site Vitrine Multilingue pour un Cabinet d'expertise AzkExpertise
 
-**Application web full stack : site institutionnel, formulaire de contact et espace d'administration**
+
+
+**AzkExpertise** est une application web métier conçue pour faciliter la gestion des données liées à une activité d’expertise. Le projet vise à proposer une interface moderne et réactive, tout en séparant le frontend du backend grâce à une architecture composée d’une **API REST** et d’une **application SPA**.
+
 
 ![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white)
 ![Vue.js](https://img.shields.io/badge/Vue.js-3-4FC08D?logo=vuedotjs&logoColor=white)
